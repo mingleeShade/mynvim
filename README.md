@@ -25,7 +25,7 @@ sudo make install
 
 ## 使用配置
 
-拷贝当前文件(init.vim)到`~/.config/nvim/`目录下，并打开 nvim
+拷贝当前文件(init.vim)到`~/.config/nvim/`目录下，并打开 nvim。
 
 ## 安装插件管理器
 
@@ -149,6 +149,10 @@ ripgrep 是非常快速的模糊查找字符串工具，效率是普通工具的
 
 - debian 10(buster) 用用户可以直接使用命令`sudo apt-get install ripgrep`进行安装。
 - 如果使用源码安装的方式，需要先安装 Rust("https://www.rust-lang.org/")。
+
+## 健康检查
+
+插件与工具都安装好之后，可以执行`:checkhealth`进行健康检查，并按照提示把问题一一解决
 
 ## 调试技巧
 
