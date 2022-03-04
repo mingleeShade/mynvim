@@ -41,7 +41,7 @@ coc 源码地址："https://github.com/neoclide/coc.nvim"。
 
 ### nodjs 安装
 
-安装指引："https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions"。
+安装指引："https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions"
 
 ```bash
 # debian 安装方案
@@ -87,7 +87,7 @@ bear 是一个为 clang 生成编译数据库的工具。
 
 用于合并两个 json 文件，如 compile_commands.json。
 
-安装方式：`sudo apt-get install jq`。
+安装方式：`sudo apt-get install jq`
 
 使用方式：
 
@@ -111,7 +111,7 @@ jq -s 'map(.[])' a/compile_commands.json b/compile_commands.json > compile_comma
 
 fzf 堪称模糊搜索神器，效率极高，推荐也安装到控制台使用。
 
-安装参考："https://github.com/junegunn/fzf#installation"。
+安装参考："https://github.com/junegunn/fzf#installation"
 
 控制台内使用方式：
 
