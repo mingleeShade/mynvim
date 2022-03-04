@@ -35,13 +35,13 @@ init.vim 生效后首次打开 nvim 后自动安装 plug.vim
 
 coc 支持 lsp，是个强大的补全工具，同时也是一个插件管理工具，可以通过coc安装插件。
 
-coc 源码地址："https://github.com/neoclide/coc.nvim"
+coc 源码地址："https://github.com/neoclide/coc.nvim"。
 
-要使 coc 正常工作首先需要安装 12.12 以上的 nodejs
+要使 coc 正常工作首先需要安装 12.12 以上的 nodejs。
 
 ### nodjs 安装
 
-安装指引："https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions"
+安装指引："https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions"。
 
 ```bash
 # debian 安装方案
@@ -59,7 +59,7 @@ coc-clangd 是 c++ 补全插件，还有一个插件是 coc-ccls，两者选其�
 
 ### 安装 ctags/gtags 和 cscope
 
-ctags 安装不多说明，可以使用 apt-get install ctags 直接安装原生 ctags 或者安装 universal-ctags
+ctags 安装不多说明，可以使用`apt-get install ctags`直接安装原生 ctags 或者安装 universal-ctags。
 
 gtags 是比ctags更好的标签生成器
 
@@ -67,6 +67,8 @@ gtags 是比ctags更好的标签生成器
 - 官方文档："https://www.gnu.org/software/global/global.html"
 - 下载地址："https://ftp.gnu.org/pub/gnu/global/global-6.6.tar.gz"
 - 安装方式：源码安装，需要先安装 pygments (`sudo pip install pygments`)
+
+cscope 也可以通过命令直接安装
 
 ### bear
 
@@ -109,7 +111,7 @@ jq -s 'map(.[])' a/compile_commands.json b/compile_commands.json > compile_comma
 
 fzf 堪称模糊搜索神器，效率极高，推荐也安装到控制台使用。
 
-安装参考："https://github.com/junegunn/fzf#installation"
+安装参考："https://github.com/junegunn/fzf#installation"。
 
 控制台内使用方式：
 
@@ -136,7 +138,7 @@ telnet **<TAB>
 
 ripgrep 是非常快速的模糊查找字符串工具，效率是普通工具的几倍甚至几十倍，可以配合 fzf 使用。
 
-安装指南："https://github.com/BurntSushi/ripgrep#installation"
+安装指南："https://github.com/BurntSushi/ripgrep#installation"。
 
 - debian 用户可以直接下载 .deb 安装
 
@@ -146,7 +148,7 @@ ripgrep 是非常快速的模糊查找字符串工具，效率是普通工具的
     ```
 
 - debian 10(buster) 用用户可以直接使用命令`sudo apt-get install ripgrep`进行安装。
-- 如果使用源码安装的方式，需要先安装 Rust("https://www.rust-lang.org/")
+- 如果使用源码安装的方式，需要先安装 Rust("https://www.rust-lang.org/")。
 
 ## 调试技巧
 
