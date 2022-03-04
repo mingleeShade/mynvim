@@ -1,12 +1,8 @@
 # MY NVIM
 
----
-
 NVIM 配置
 
 ## 安装 neovim
-
----
 
 ### 命令行安装
   
@@ -29,8 +25,6 @@ sudo make install
 
 ## 使用配置
 
----
-
 拷贝当前文件(init.vim)到`~/.config/nvim/`目录下，并打开 nvim
 
 ## 安装插件管理器
@@ -38,8 +32,6 @@ sudo make install
 init.vim 生效后首次打开 nvim 后自动安装
 
 ## coc.vim
-
----
 
 coc 支持 lsp，是个强大的补全工具，同时也是一个插件管理工具，可以通过coc安装插件
 coc 源码地址："https://github.com/neoclide/coc.nvim"
@@ -61,8 +53,6 @@ coc-clangd 是 c++ 补全插件，还有一个插件是 coc-ccls，两者选其�
 使用 coc-clangd 通过`:CocCommand clangd-install`安装最新 clangd。
 
 ## 其他外部工具安装
-
----
 
 ### 安装 ctags/gtags 和 cscope
 
@@ -164,7 +154,5 @@ ripgrep 是非常快速的模糊查找字符串工具，效率是普通工具的
     使用`help redir`查看更多帮助信息
 
 ## 其他
-
----
 
 - 字体下载："https://www.nerdfonts.com/font-downloads"
