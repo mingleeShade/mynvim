@@ -29,15 +29,17 @@ sudo make install
 
 ## 安装插件管理器
 
-init.vim 生效后首次打开 nvim 后自动安装
+init.vim 生效后首次打开 nvim 后自动安装 plug.vim
 
 ## coc.vim
 
-coc 支持 lsp，是个强大的补全工具，同时也是一个插件管理工具，可以通过coc安装插件
+coc 支持 lsp，是个强大的补全工具，同时也是一个插件管理工具，可以通过coc安装插件。
+
 coc 源码地址："https://github.com/neoclide/coc.nvim"
+
 要使 coc 正常工作首先需要安装 12.12 以上的 nodejs
 
-### nodjs安装
+### nodjs 安装
 
 安装指引："https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions"
 
@@ -49,7 +51,8 @@ apt-get install -y nodejs"
 
 ### coc-clangd
 
-coc-clangd 是 c++ 补全插件，还有一个插件是 coc-ccls，两者选其一即可
+coc-clangd 是 c++ 补全插件，还有一个插件是 coc-ccls，两者选其一即可。
+
 使用 coc-clangd 通过`:CocCommand clangd-install`安装最新 clangd。
 
 ## 其他外部工具安装
@@ -74,13 +77,16 @@ bear 是一个为 clang 生成编译数据库的工具。
 - 命令行安装：`sudo apt-get install bear`
 - 源码安装: 源码地址为 "https://github.com/rizsotto/Bear"
 
-使用方式：在 make 命令前加 bear，如`bear make -j4`，即可生成 compile_commands.json
-生成的 compile_commands.json 是 coc-clangd 补全和跳转的依据
+使用方式：在 make 命令前加 bear，如`bear make -j4`，即可生成 compile_commands.json。
+
+生成的 compile_commands.json 是 coc-clangd 补全和跳转的依据。
 
 ### jq
 
 用于合并两个 json 文件，如 compile_commands.json。
-安装方式：`sudo apt-get install jq`
+
+安装方式：`sudo apt-get install jq`。
+
 使用方式：
 
 ```bash
@@ -89,20 +95,22 @@ jq -s 'map(.[])' a/compile_commands.json b/compile_commands.json > compile_comma
 
 ### ranger
 
-使用 rnvimr 插件的前置工具，建议使用 pip 进行安装
+使用 rnvimr 插件的前置工具，建议使用 pip 进行安装。
 
 ### Pynvim
 
-使用 rnvimr 插件的前置工具，建议使用 pip 进行安装
+使用 rnvimr 插件的前置工具，建议使用 pip 进行安装。
 
 ### Ueberzug
 
-使用 rnvimr 插件的前置工具，建议使用 pip 进行安装
+使用 rnvimr 插件的前置工具，建议使用 pip 进行安装。
 
 ### fzf
 
 fzf 堪称模糊搜索神器，效率极高，推荐也安装到控制台使用。
+
 安装参考："https://github.com/junegunn/fzf#installation"
+
 控制台内使用方式：
 
 ```bash
@@ -126,7 +134,8 @@ telnet **<TAB>
 
 ### ripgrep
 
-ripgrep 是非常快速的模糊查找字符串工具，效率是普通工具的几倍甚至几十倍，可以配合 fzf 使用
+ripgrep 是非常快速的模糊查找字符串工具，效率是普通工具的几倍甚至几十倍，可以配合 fzf 使用。
+
 安装指南："https://github.com/BurntSushi/ripgrep#installation"
 
 - debian 用户可以直接下载 .deb 安装
