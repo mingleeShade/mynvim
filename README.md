@@ -35,7 +35,7 @@ init.vim 生效后首次打开 nvim 后自动安装 plug.vim
 
 coc 支持 lsp，是个强大的补全工具，同时也是一个插件管理工具，可以通过coc安装插件。
 
-coc 源码地址："https://github.com/neoclide/coc.nvim"。
+coc 源码地址："https://github.com/neoclide/coc.nvim"
 
 要使 coc 正常工作首先需要安装 12.12 以上的 nodejs。
 
