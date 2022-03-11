@@ -49,13 +49,13 @@ curl -fsSL https://deb.nodesource.com/setup_12.x | bash -
 apt-get install -y nodejs"
 ```
 
+## C++ 支持
+
 ### coc-clangd
 
 coc-clangd 是 c++ 补全插件，还有一个插件是 coc-ccls，两者选其一即可。
 
 使用 coc-clangd 通过`:CocCommand clangd-install`安装最新 clangd。
-
-## 其他外部工具安装
 
 ### 安装 ctags/gtags 和 cscope
 
@@ -94,6 +94,17 @@ bear 是一个为 clang 生成编译数据库的工具。
 ```bash
 jq -s 'map(.[])' a/compile_commands.json b/compile_commands.json > compile_commands.json
 ```
+
+## Golang 支持
+
+### gopls
+
+gopls 是 Golang 团队自行开发的 language server，可以通过 go 安装`go install golang.org/x/tools/gopls@latest`，
+要注意 gopls 配置 gopls 会安装到`go env`显示的`GOPATH`目录下的`bin`目录中，需要将其加环境变量`PATH`中。
+
+> 注意：gopls 需要 go1.12 以上版本。
+
+## 其他外部工具安装
 
 ### ranger
 
@@ -167,6 +178,29 @@ ripgrep 是非常快速的模糊查找字符串工具，效率是普通工具的
     ```
 
     使用`help redir`查看更多帮助信息
+- 打开 Coc 日志：`:CocInfo`
+- 打开 Coc 插件的日志输出：先输入指令`:CocCommand workspace.showOutput`，然后选择想要打开的日志文件
+
+## 问题汇总
+
+### gopls definition not found
+
+使用 gopls 时出现`[coc.vim] definition not found`，使用`:CocCommand workspace.showOutput`查看`languageserver.golang`
+的日志，发现在跳转通过 git 引用的包时会出现如下提示
+
+```bash
+fatal: could not read Username for 'https://gitlab.com': terminal prompts disabled
+```
+
+参考了帖子："https://medium.com/easyread/today-i-learned-fix-go-get-private-repository-return-error-terminal-prompts-disabled-8c5549d89045"
+之后，按照提示修改了 git 相关配置之后，问题解决，可以正常跳转。修改如下：
+
+```bash
+git config --global url."git@gitlab.com:".insteadOf "https://gitlab.com/"
+cat ~/git/config
+[url "git@gitlab.com:"]
+ insteadOf = https://gitlab.com/
+```
 
 ## 其他
 

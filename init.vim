@@ -381,6 +381,8 @@ Plug 'dhruvasagar/vim-table-mode'
 " Git支持
 Plug 'airblade/vim-gitgutter'
 
+" 文本对齐插件
+Plug 'junegunn/vim-easy-align'
 
 call plug#end()
 
@@ -401,6 +403,12 @@ let g:far#enable_undo=1
 nnoremap <silent> <C-M-f> :Farf<cr>
 vnoremap <silent> <C-M-f> :Farf<cr>
 
+" farr 界面快捷键说明
+" t: 忽略匹配的某一项， 
+" T: 忽略全部
+" R: 替换
+" s: 保存
+" u: 撤销
 nnoremap <silent> <C-M-r> :Farr<cr>
 vnoremap <silent> <C-M-r> :Farr<cr>
 
@@ -802,7 +810,8 @@ noremap <silent> <leader>ge :GscopeFind e <C-R><C-W><cr>
 noremap <silent> <leader>gf :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
 noremap <silent> <leader>gi :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
 noremap <silent> <leader>gd :GscopeFind d <C-R><C-W><cr>
-noremap <silent> <leader>ga :GscopeFind a <C-R><C-W><cr>
+" \ga 快捷键卡死，原因暂时未知
+" noremap <silent> <leader>ga :GscopeFind a <C-R><C-W><cr>
 noremap <silent> <leader>gz :GscopeFind z <C-R><C-W><cr>
 
 let g:gutentags_define_advanced_commands = 1
@@ -1015,5 +1024,16 @@ let g:snips_author="lihaiming"
 " === coc-translator
 " ===
 nmap ts <Plug>(coc-translator-p)
+
+
+
+"===
+"=== vim-easy-align: 对齐插件
+"===
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap <leader>ea <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap <leader>ea <Plug>(EasyAlign)
 
 "==========插件设置=========>

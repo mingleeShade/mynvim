@@ -1,0 +1,31 @@
+{
+    "coc.preferences.extensionUpdateCheck": "daily",
+    "coc.preferences.formatOnSaveFiletypes": [
+        "json",
+        "xml"
+    ],
+    "markdownlint.onOpen": true,
+    "markdownlint.onChange": false,
+    "markdownlint.onSave": true,
+    "diagnostic.refreshOnInsertMode": false,
+    "suggest.noselect": true,
+    "suggest.enablePreselect": false,
+    "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd",
+    "languageserver": {
+        "golang": {
+            "command": "gopls",
+            "rootPatterns": [
+                "go.mod",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "filetypes": [
+                "go"
+            ],
+            "initializationOptions": {
+                "usePlaceholders": true
+            }
+        }
+    }
+}
