@@ -185,15 +185,15 @@ ripgrep 是非常快速的模糊查找字符串工具，效率是普通工具的
 
 ### gopls definition not found
 
-使用 gopls 时出现`[coc.vim] definition not found`，使用`:CocCommand workspace.showOutput`查看`languageserver.golang`
-的日志，发现在跳转通过 git 引用的包时会出现如下提示
+使用 gopls 时出现`[coc.vim] definition not found`，用`:CocCommand workspace.showOutput`查看`languageserver.golang`
+的日志，发现在跳转通过 git 引用的包时会出现如下提示：
 
 ```bash
 fatal: could not read Username for 'https://gitlab.com': terminal prompts disabled
 ```
 
-参考了帖子："https://medium.com/easyread/today-i-learned-fix-go-get-private-repository-return-error-terminal-prompts-disabled-8c5549d89045"
-之后，按照提示修改了 git 相关配置之后，问题解决，可以正常跳转。修改如下：
+参考了帖子："https://medium.com/easyread/today-i-learned-fix-go-get-private-repository-return-error-terminal-prompts-disabled-8c5549d89045"，
+按照提示修改了 git 相关配置之后，问题解决，可以正常跳转。修改如下：
 
 ```bash
 git config --global url."git@gitlab.com:".insteadOf "https://gitlab.com/"
