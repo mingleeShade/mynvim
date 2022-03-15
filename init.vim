@@ -482,7 +482,14 @@ let g:airline#extensions#branch#enabled=1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
+" powerline symbols
+" 设置字符，window上，打开 字符映射表，找到所需字体对应的字符，自行替换
+" 字符选项可参见 ~/config/nvim/plugged/vim-airline/doc/airline.txt
 let g:airline_symbols.branch = ''
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
 
 
 
@@ -541,7 +548,11 @@ let g:Lf_IgnoreCurrentBufferName = 1
 " popup mode
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
-let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+" 使用WindTerm时，且用 YeHei Powerline 字体时，用以下配置
+let g:Lf_StlSeparator = { 'left': "⮀", 'right': "⮂", 'font': "YeHei Consolas Hybrid Powerline" }
+
+" 使用其他ssh工具时采用
+"let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Droid Sans Mono for Slashed Powerline" }
 let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 
 let g:Lf_ShortcutF = "<leader>ff"
@@ -632,7 +643,7 @@ map <F6> :NERDTree<CR>
 noremap <c-l> :Vista!!<CR>
 noremap tc :silent! Vista finder coc<CR>
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
-let g:vista_default_executive = 'ctags'
+let g:vista_default_executive = 'coc'
 let g:vista_fzf_preview = ['right:50%']
 let g:vista#renderer#enable_icon = 1
 " function: 
