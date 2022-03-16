@@ -549,10 +549,10 @@ let g:Lf_IgnoreCurrentBufferName = 1
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
 " 使用WindTerm时，且用 YeHei Powerline 字体时，用以下配置
-let g:Lf_StlSeparator = { 'left': "⮀", 'right': "⮂", 'font': "YeHei Consolas Hybrid Powerline" }
+"let g:Lf_StlSeparator = { 'left': "⮀", 'right': "⮂", 'font': "YeHei Consolas Hybrid Powerline" }
 
 " 使用其他ssh工具时采用
-"let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Droid Sans Mono for Slashed Powerline" }
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Droid Sans Mono for Slashed Powerline" }
 let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 
 let g:Lf_ShortcutF = "<leader>ff"
