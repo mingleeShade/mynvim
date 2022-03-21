@@ -82,6 +82,7 @@ bear 是一个为 clang 生成编译数据库的工具。
 使用方式：在 make 命令前加 bear，如`bear make -j4`，即可生成 compile_commands.json。
 
 生成的 compile_commands.json 是 coc-clangd 补全和跳转的依据。
+compile_commands.json 的生成方式可以参考："https://clangd.llvm.org/installation.html#project-setup"
 
 ### jq
 

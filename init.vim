@@ -391,6 +391,33 @@ call plug#end()
 
 "<=========插件设置==========
 
+" ===
+" === gitgutter: 显示每一行的git信息（新增、删除或者修改）
+" ===
+" 跳转到代码块(git修改代码块)
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+" 用 :Gqf 命令汇总并在 QuickFix 窗口打开所有的修改块
+command! Gqf GitGutterQuickFix | copen
+" 在修改块上使用 ghs 快捷键，将该代码块加入缓冲区(stage)
+nmap ghs <Plug>(GitGutterStageHunk)
+" 将git修改回退
+nmap ghu <Plug>(GitGutterUndoHunk)
+" 打开预览窗口
+nmap ghp <Plug>(GitGutterPreviewHunk)
+
+" 状态栏线上修改情况，vim-airline情况下，无需此配置
+" function! GitStatus()
+"   let [a,m,r] = GitGutterGetHunkSummary()
+"   return printf('+%d ~%d -%d', a, m, r)
+" endfunction
+" set statusline+=%{GitStatus()}
+
+" 符号高亮
+"highlight SignColumn guibg=darkgrey ctermbg=darkgrey
+" 悬浮预览窗口为悬浮窗口
+let g:gitgutter_preview_win_floating = 1
+
 
 " ===
 " === far: 全局搜索/替换 
@@ -907,6 +934,7 @@ let g:formaters_c = ['allman']
 " coc  插件管理
 let g:coc_global_extensions = [
     \ 'coc-json',
+    \ 'coc-git',
     \ 'coc-xml',
     \ 'coc-vimlsp',
     \ 'coc-jedi',
