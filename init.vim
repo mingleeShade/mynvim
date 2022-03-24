@@ -327,6 +327,9 @@ Plug 'skywind3000/gutentags_plus'
 " 预览窗口增强，配合 tags 使用
 Plug 'skywind3000/vim-preview'
 
+" quickfix增强
+Plug 'mingleeShade/quickr-preview.vim'
+
 " 代码格式化
 "Plug 'Chiel92/vim-autoformat'
 
@@ -405,6 +408,52 @@ nmap ghs <Plug>(GitGutterStageHunk)
 nmap ghu <Plug>(GitGutterUndoHunk)
 " 打开预览窗口
 nmap ghp <Plug>(GitGutterPreviewHunk)
+
+" 使用 [c ]c 遍历所有buffer的git代码块
+function! NextHunkAllBuffers()
+  let line = line('.')
+  GitGutterNextHunk
+  if line('.') != line
+    return
+  endif
+
+  let bufnr = bufnr('')
+  while 1
+    bnext
+    if bufnr('') == bufnr
+      return
+    endif
+    if !empty(GitGutterGetHunks())
+      1
+      GitGutterNextHunk
+      return
+    endif
+  endwhile
+endfunction
+
+function! PrevHunkAllBuffers()
+  let line = line('.')
+  GitGutterPrevHunk
+  if line('.') != line
+    return
+  endif
+
+  let bufnr = bufnr('')
+  while 1
+    bprevious
+    if bufnr('') == bufnr
+      return
+    endif
+    if !empty(GitGutterGetHunks())
+      normal! G
+      GitGutterPrevHunk
+      return
+    endif
+  endwhile
+endfunction
+
+nmap <silent> ]c :call NextHunkAllBuffers()<CR>
+nmap <silent> [c :call PrevHunkAllBuffers()<CR>
 
 " 状态栏线上修改情况，vim-airline情况下，无需此配置
 " function! GitStatus()
@@ -511,12 +560,18 @@ if !exists('g:airline_symbols')
 endif
 " powerline symbols
 " 设置字符，window上，打开 字符映射表，找到所需字体对应的字符，自行替换
-" 字符选项可参见 ~/config/nvim/plugged/vim-airline/doc/airline.txt
+" 字符选项可参见 
+" ~/.config/nvim/plugged/vim-airline/doc/airline.txt
 let g:airline_symbols.branch = ''
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+"let g:airline_left_sep = '⮀'
+"let g:airline_left_alt_sep = '⮁'
+"let g:airline_right_sep = '⮂'
+"let g:airline_right_alt_sep = '⮃'
+
 
 
 
@@ -579,7 +634,8 @@ let g:Lf_PreviewInPopup = 1
 "let g:Lf_StlSeparator = { 'left': "⮀", 'right': "⮂", 'font': "YeHei Consolas Hybrid Powerline" }
 
 " 使用其他ssh工具时采用
-let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Droid Sans Mono for Slashed Powerline" }
+"let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Droid Sans Mono for Slashed Powerline" }
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Consolas Nerd Font Mono" }
 let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 
 let g:Lf_ShortcutF = "<leader>ff"
@@ -859,10 +915,10 @@ let g:gutentags_define_advanced_commands = 1
 " === vim-preview: 增强预览窗口
 " ===
 " 按键映射
-noremap <m-p> :PreviewScroll -1<cr>
-noremap <m-n> :PreviewScroll +1<cr>
-inoremap <m-p> <c-\><c-o>:PreviewScroll -1<cr>
-inoremap <m-n> <c-\><c-o>:PreviewScroll +1<cr>
+noremap <silent> <leader>qk :PreviewScroll -1<cr>
+noremap <silent> <leader>qj :PreviewScroll +1<cr>
+inoremap <silent> <leader>qk <c-\><c-o>:PreviewScroll -1<cr>
+inoremap <silent> <leader>qj <c-\><c-o>:PreviewScroll +1<cr>
 " 默认关闭 preview 窗口的快捷键是 CTRL+W z
 
 " 在Quickfix窗口下打开 预览窗口
@@ -886,6 +942,26 @@ inoremap <F4> <c-\><c-o>:PreviewSignature!<cr>
 "call LanguageClient#textDocument_definition({'gotoCmd':'PreviewFile'})
 
 
+
+
+" ===
+" === quickr-preview.vim
+" ===
+" Auto-open preview window
+let g:quickr_preview_on_cursor = 1
+" Auto-close quickfix on enter
+let g:quickr_preview_exit_on_enter = 1
+
+" 配合 quickr-preview 实现悬浮 preview
+function! s:pedit()
+    if &buftype != 'quickfix'
+        return
+    endif
+    let l:list_index=line(".")-1
+    let l:list=getqflist()[l:list_index]
+    echo "print peditttt"
+    execute ':pedit +'.l:list.lnum." ".bufname(l:list.bufnr)
+endfunction
 
 " ===
 " === fuf：提供文件的模糊查找方式
@@ -969,11 +1045,64 @@ endif
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
             \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" 函数跳转快捷键
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" 函数跳转快捷键 不调用原始接口
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+
+" 函数跳转快捷键 自行封装接口
+nmap <silent> gd :call <SID>CocJumpAndSetTagStack(0) <CR>
+nmap <silent> gy :call <SID>CocJumpAndSetTagStack(1) <CR>
+nmap <silent> gi :call <SID>CocJumpAndSetTagStack(2) <CR>
+nmap <silent> gr :call <SID>CocJumpAndSetTagStack(3) <CR>
+
+function! s:CocJumpAndSetTagStack(type)
+	" 记录好跳转前的位置.
+	let tag = expand('<cword>')
+	let pos = [bufnr()] + getcurpos()[1:]
+	let item = {'bufnr': pos[0], 'from': pos, 'tagname': tag}
+
+    " 判断跳转的方式
+    let result = v:false
+    if a:type == 0
+        let result = CocAction('jumpDefinition')
+    elseif a:type == 1
+        let result = CocAction('jumpTypeDefinition')
+    elseif a:type == 2
+        let result = CocAction('jumpImplementation')
+    elseif a:type == 3
+        let result = CocAction('jumpReferences')
+    endif
+
+    if result == v:true
+        " 如果可以跳转，则取出之前的 tagstack，并判断是否要将跳转前的位置写入
+        " tagstack 
+		let winid = win_getid()
+		let stack = gettagstack(winid)
+
+        " 下面对比当期位置和 tagstack 中的位置，不存在相同元素再行加入
+        let temp_item = item
+        " 移除‘from’列表最后一个参数，方便与 gettagstack 获取的数据进行比较
+        call remove(temp_item['from'], 4)
+        let found = v:false
+        for iter in stack['items']
+            " 为了方便使用“==”进行对比，先移除 matchnr 项
+            call remove(iter, "matchnr")
+            if iter == temp_item
+                " 找到则跳出
+                let found = v:true
+                break
+            endif
+        endfor
+        if found == v:false
+            " 不存在相同项，则设置 tagstack
+            let stack['items'] = [item]
+            call settagstack(winid, stack, 't')
+        endif
+	endif
+endfunction
+
 
 " 使用 K 来在预览窗口中显示文档
 nnoremap <silent> K :call <SID>show_documentation()<CR>
