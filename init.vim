@@ -394,6 +394,15 @@ call plug#end()
 
 "<=========插件设置==========
 
+
+" ===
+" === coc-git: Git相关支持
+" ===
+nmap [c <Plug>(coc-git-prevconflict)
+nmap ]c <Plug>(coc-git-nextconflict)
+nmap gc :CocCommand git.showCommit <CR>
+
+
 " ===
 " === gitgutter: 显示每一行的git信息（新增、删除或者修改）
 " ===
@@ -409,7 +418,7 @@ nmap ghu <Plug>(GitGutterUndoHunk)
 " 打开预览窗口
 nmap ghp <Plug>(GitGutterPreviewHunk)
 
-" 使用 [c ]c 遍历所有buffer的git代码块
+" 使用 [g ]g 遍历所有buffer的git代码块
 function! NextHunkAllBuffers()
   let line = line('.')
   GitGutterNextHunk
@@ -452,8 +461,8 @@ function! PrevHunkAllBuffers()
   endwhile
 endfunction
 
-nmap <silent> ]c :call NextHunkAllBuffers()<CR>
-nmap <silent> [c :call PrevHunkAllBuffers()<CR>
+nmap <silent> ]g :call NextHunkAllBuffers()<CR>
+nmap <silent> [g :call PrevHunkAllBuffers()<CR>
 
 " 状态栏线上修改情况，vim-airline情况下，无需此配置
 " function! GitStatus()
@@ -1022,6 +1031,21 @@ let g:coc_global_extensions = [
     \ 'coc-marketplace'
     \]
 
+set hidden
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" 以下代码可以将 符号列（显示git的修改状态） 和
+" 正常的列号合并成一列，不过个人认显示效果并不好
+" if has("nvim-0.5.0") || has("patch-8.1.1564")
+"   " Recently vim can merge signcolumn and number column into one
+"   set signcolumn=number
+" else
+"   set signcolumn=yes
+" endif
+
 " TAB触发补全
 inoremap <silent><expr> <TAB>
             \ pumvisible() ? "\<C-n>" :
@@ -1104,7 +1128,7 @@ function! s:CocJumpAndSetTagStack(type)
 endfunction
 
 
-" 使用 K 来在预览窗口中显示文档
+" 使用 K 来在预览窗口中显示帮助文档
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
@@ -1117,7 +1141,7 @@ function! s:show_documentation()
 endfunction
 
 " 保持光标不动时，高亮显示符号及其引用(目前不起效果, 先注释)
-"autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " 使用 \rn 将符号重命名(目前不起效果，先注释).
 nmap <c-\>rn <Plug>(coc-rename)
@@ -1125,6 +1149,14 @@ nmap <c-\>rn <Plug>(coc-rename)
 " 格式化选中的代码(需要lsp语言支持)
 "xmap <leader>f  <Plug>(coc-format-selected)
 "nmap <leader>f  <Plug>(coc-format-selected)
+"
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
 
 " 暂时不知道用途，后面看看
 " Remap for do codeAction of selected region
@@ -1139,6 +1171,51 @@ endfunction
 nmap <leader>qf :CocFix <CR>
 nmap <leader>dn <Plug>(coc-diagnostic-next)
 nmap <leader>dp <Plug>(coc-diagnostic-next)
+
+" 通过快捷键操作选中函数和类定义域内的内容
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" 选中下一个范围的内容，从 单词、行、段落到整个函数体
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" " Mappings for CoCList
+" " Show all diagnostics.
+" nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" " Manage extensions.
+" nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" " Show commands.
+" nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" " Find symbol of current document.
+" nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" " Search workspace symbols.
+" nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" " Do default action for next item.
+" nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" " Resume latest coc list.
+" nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
 

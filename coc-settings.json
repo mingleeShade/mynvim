@@ -4,6 +4,9 @@
         "json",
         "xml"
     ],
+    "git.addGBlameToBufferVar": true,
+    "git.addGBlameToVirtualText": true,
+    "git.showCommitInFloating": false,
     "markdownlint.onOpen": true,
     "markdownlint.onChange": false,
     "markdownlint.onSave": true,
