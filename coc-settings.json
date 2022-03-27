@@ -7,6 +7,7 @@
     "git.addGBlameToBufferVar": true,
     "git.addGBlameToVirtualText": true,
     "git.showCommitInFloating": false,
+    "git.changeRemovedSign.text": "",
     "markdownlint.onOpen": true,
     "markdownlint.onChange": false,
     "markdownlint.onSave": true,

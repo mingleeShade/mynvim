@@ -3,7 +3,7 @@
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     echo "plug.vim not exist, now download it!"
     :silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 "<=========基础设置==========
@@ -383,6 +383,7 @@ Plug 'dhruvasagar/vim-table-mode'
 
 " Git支持
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 
 " 文本对齐插件
 Plug 'junegunn/vim-easy-align'
@@ -476,9 +477,17 @@ nmap <silent> [g :call PrevHunkAllBuffers()<CR>
 " 悬浮预览窗口为悬浮窗口
 let g:gitgutter_preview_win_floating = 1
 
+" let g:gitgutter_sign_added = 'xx'
+" let g:gitgutter_sign_modified = 'yy'
+" let g:gitgutter_sign_removed = 'zz'
+" let g:gitgutter_sign_removed_first_line = '^^'
+" let g:gitgutter_sign_removed_above_and_below = '{'
+" let g:gitgutter_sign_modified_removed = ''
+
+
 
 " ===
-" === far: 全局搜索/替换 
+" === far: 全局搜索/替换
 " ===
 set lazyredraw
 set regexpengine=1
@@ -489,7 +498,7 @@ nnoremap <silent> <C-M-f> :Farf<cr>
 vnoremap <silent> <C-M-f> :Farf<cr>
 
 " farr 界面快捷键说明
-" t: 忽略匹配的某一项， 
+" t: 忽略匹配的某一项,
 " T: 忽略全部
 " R: 替换
 " s: 保存
@@ -499,7 +508,7 @@ vnoremap <silent> <C-M-r> :Farr<cr>
 
 
 " ===
-" === vim-multiple-cursors: 多光标编辑, 
+" === vim-multiple-cursors: 多光标编辑,
 " === 该工具已废弃，使用 mg979/vim-visual-multi 取代之
 " ===
 "let g:multi_cursor_use_default_mapping=0
@@ -515,7 +524,7 @@ vnoremap <silent> <C-M-r> :Farr<cr>
 
 " LeaderF: 模糊查找插件，比ctrlp更强
 " ===
-" === vim-visual-multi: 多光标编辑, 
+" === vim-visual-multi: 多光标编辑,
 " ===
 " 修改按键映射，按键全映射参考：https://github.com/mg979/vim-visual-multi/wiki/Mappings#full-mappings-list
 " 其中 S-Left 和 S-Right 不再文档中，其被定义在
@@ -569,17 +578,27 @@ if !exists('g:airline_symbols')
 endif
 " powerline symbols
 " 设置字符，window上，打开 字符映射表，找到所需字体对应的字符，自行替换
-" 字符选项可参见 
+" 字符选项可参见
 " ~/.config/nvim/plugged/vim-airline/doc/airline.txt
 let g:airline_symbols.branch = ''
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-"let g:airline_left_sep = '⮀'
-"let g:airline_left_alt_sep = '⮁'
-"let g:airline_right_sep = '⮂'
-"let g:airline_right_alt_sep = '⮃'
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_right_alt_sep = ''
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+" let g:airline_symbols.maxlinenr = ''
+" let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.whitespace = ''
+" let g:airline_left_sep = '⮀'
+" let g:airline_left_alt_sep = '⮁'
+" let g:airline_right_sep = '⮂'
+" let g:airline_right_alt_sep = '⮃'
+" let g:airline_symbols.maxlinenr = '☰ '
+" let g:airline_symbols.whitespace = '☲ '
 
 
 
@@ -644,7 +663,8 @@ let g:Lf_PreviewInPopup = 1
 
 " 使用其他ssh工具时采用
 "let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Droid Sans Mono for Slashed Powerline" }
-let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Consolas Nerd Font Mono" }
+"let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Consolas Nerd Font Mono" }
+let g:Lf_StlSeparator = { 'left': "", 'right': "", 'font': "Consolas Nerd Font Mono" }
 let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 
 let g:Lf_ShortcutF = "<leader>ff"
@@ -730,7 +750,7 @@ map <F6> :NERDTree<CR>
 
 " ===
 " === vista.vim: tagbar 替代品, 支持 lsp 和 异步处理
-" === vista.vim 不支持原始的 Exuberant Ctags, 
+" === vista.vim 不支持原始的 Exuberant Ctags,
 " 如果 g:vista_default_executive 设置为 'ctags', 则需要先安装 Universal-ctags(https://github.com/universal-ctags/ctags) 方可使用
 noremap <c-l> :Vista!!<CR>
 noremap tc :silent! Vista finder coc<CR>
@@ -863,7 +883,7 @@ let g:gutentags_ctags_tagfile = '.tags'
 
 let g:gutentags_modules = []
 if executable('gtags-cscope') && executable('gtags')
-	let g:gutentags_modules += ['gtags_cscope']
+    let g:gutentags_modules += ['gtags_cscope']
 endif
 
 " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录 "
@@ -894,17 +914,17 @@ let g:gutentags_auto_add_gtags_cscope = 0
 let g:gutentags_plus_switch = 1
 
 let g:gutentags_plus_nomap = 1
-" keymap	desc
-" s	Find symbol (reference) under cursor
-" g	Find symbol definition under cursor
-" d	Functions called by this function
-" c	Functions calling this function
-" t	Find text string under cursor
-" e	Find egrep pattern under cursor
-" f	Find file name under cursor
-" i	Find files #including the file name under cursor
-" a	Find places where current symbol is assigned
-" z	Find current word in ctags database
+" keymap    desc
+" s         Find symbol (reference) under cursor
+" g         Find symbol definition under cursor
+" d         Functions called by this function
+" c         Functions calling this function
+" t         Find text string under cursor
+" e         Find egrep pattern under cursor
+" f         Find file name under cursor
+" i         Find files #including the file name under cursor
+" a         Find places where current symbol is assigned
+" z         Find current word in ctags database
 noremap <silent> <leader>gs :GscopeFind s <C-R><C-W><cr>
 noremap <silent> <leader>gg :GscopeFind g <C-R><C-W><cr>
 noremap <silent> <leader>gc :GscopeFind c <C-R><C-W><cr>
@@ -946,7 +966,7 @@ set noshowmode
 noremap <F4> :PreviewSignature!<cr>
 inoremap <F4> <c-\><c-o>:PreviewSignature!<cr>
 
-" When you are using Language Servers with LanguageClient-neovim, 
+" When you are using Language Servers with LanguageClient-neovim,
 " You can use PreviewFile to preview definition instead of jump to it:
 "call LanguageClient#textDocument_definition({'gotoCmd':'PreviewFile'})
 
@@ -1082,10 +1102,10 @@ nmap <silent> gi :call <SID>CocJumpAndSetTagStack(2) <CR>
 nmap <silent> gr :call <SID>CocJumpAndSetTagStack(3) <CR>
 
 function! s:CocJumpAndSetTagStack(type)
-	" 记录好跳转前的位置.
-	let tag = expand('<cword>')
-	let pos = [bufnr()] + getcurpos()[1:]
-	let item = {'bufnr': pos[0], 'from': pos, 'tagname': tag}
+    " 记录好跳转前的位置.
+    let tag = expand('<cword>')
+    let pos = [bufnr()] + getcurpos()[1:]
+    let item = {'bufnr': pos[0], 'from': pos, 'tagname': tag}
 
     " 判断跳转的方式
     let result = v:false
@@ -1099,32 +1119,58 @@ function! s:CocJumpAndSetTagStack(type)
         let result = CocAction('jumpReferences')
     endif
 
-    if result == v:true
-        " 如果可以跳转，则取出之前的 tagstack，并判断是否要将跳转前的位置写入
-        " tagstack 
-		let winid = win_getid()
-		let stack = gettagstack(winid)
+    if result == v:false
+        " 找不到，则结束
+        return
+    endif
 
-        " 下面对比当期位置和 tagstack 中的位置，不存在相同元素再行加入
-        let temp_item = item
-        " 移除‘from’列表最后一个参数，方便与 gettagstack 获取的数据进行比较
-        call remove(temp_item['from'], 4)
-        let found = v:false
-        for iter in stack['items']
-            " 为了方便使用“==”进行对比，先移除 matchnr 项
-            call remove(iter, "matchnr")
-            if iter == temp_item
-                " 找到则跳出
-                let found = v:true
-                break
-            endif
-        endfor
-        if found == v:false
-            " 不存在相同项，则设置 tagstack
-            let stack['items'] = [item]
-            call settagstack(winid, stack, 't')
+    let tag = expand('<cword>')
+    let pos = [bufnr()] + getcurpos()[1:]
+    let cur_item = {'bufnr': pos[0], 'from': pos, 'tagname': tag}
+
+    " 原本想着跳过去就加入堆栈，但是如果用ctrl + o 或者 ctrl + ^
+    " 跳转回来的情况，堆栈会积累太多，故而还是做去重处理 <2022-03-28 00:55:24+0800, lihaiming>
+    " if item != cur_item
+    "     " 如果跳转前后位置发生了变化，那必定加入 tagstack
+    "     let winid = win_getid()
+    "     let stack = gettagstack(winid)
+    "     let stack['items'] = [item]
+    "     " ‘t’代表加入tagstack的同时，把 curidx 之后的堆栈移除
+    "     call settagstack(winid, stack, 't')
+    "     return
+    " endif
+
+    " 如果可以跳转，则取出之前的 tagstack，并判断是否要将跳转前的位置写入 tagstack
+    let winid = win_getid()
+    let stack = gettagstack(winid)
+    let item_list = []
+
+    " 下面对比当期位置和 tagstack 中的位置，不存在相同元素再行加入
+    let temp_item = item
+    " 移除‘from’列表最后一个参数，方便与 gettagstack 获取的数据进行比较
+    call remove(temp_item['from'], 4)
+    let found = v:false
+    let index = 0
+    for iter in stack['items']
+        " 为了方便使用“==”进行对比，先移除 matchnr 项
+        let index = index + 1
+        call remove(iter, "matchnr")
+        if iter == temp_item
+            " 找到则跳出
+            let item_list = stack["items"][0:index-1]
+            let found = v:true
+            break
         endif
-	endif
+    endfor
+    if found == v:false
+        " 不存在相同项，则设置 tagstack
+        let stack['items'] = [item]
+        call settagstack(winid, stack, 't')
+    else
+        " 存在相同项，则使用截取到匹配项的栈替换
+        let stack['items'] = item_list
+        call settagstack(winid, stack, 'r')
+    endif
 endfunction
 
 
@@ -1282,3 +1328,20 @@ xmap <leader>ea <Plug>(EasyAlign)
 nmap <leader>ea <Plug>(EasyAlign)
 
 "==========插件设置=========>
+
+" 测试代码
+let redir_flag = 0
+let test_counter = 0
+function! Debug()
+    if g:redir_flag == 0
+        let g:redir_flag = 1
+        :redir! >> result.log
+        let g:test_counter = g:test_counter + 1
+        echo "<<<<<== debug begin, counter: " . g:test_counter
+    else
+        let g:redir_flag = 0
+        echo ">>>>>== debug end, counter: " . g:test_counter
+        :redir END
+    endif
+endfunction
+map <F5> :call Debug() <CR>
