@@ -1051,6 +1051,11 @@ let g:coc_global_extensions = [
     \ 'coc-marketplace'
     \]
 
+" 字符设置
+" 可作为 warning sign 和 error sign 的备选字符：
+let g:coc_status_error_sign = ''
+let g:coc_status_warning_sign = ''
+
 set hidden
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
