@@ -378,12 +378,17 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'tpope/vim-repeat'
 " 包裹式编辑，为文章增加前后包裹字符，比如 "" [] {} 等
 Plug 'tpope/vim-surround'
+Plug 'jiangmiao/auto-pairs'
 " 表格编辑
 Plug 'dhruvasagar/vim-table-mode'
 
 " Git支持
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+"diffview
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'sindrets/diffview.nvim'
 
 " 文本对齐插件
 Plug 'junegunn/vim-easy-align'
@@ -536,6 +541,19 @@ let g:VM_maps["Select Cursor Down"] = '<M-j>'           " start selecting down
 let g:VM_maps["Select Cursor Up"]   = '<M-k>'           " start selecting up
 let g:VM_maps["Select l"]           = '<M-l>'           " 选择右移
 let g:VM_maps["Select h"]           = '<M-h>'           " 选择左移
+
+
+
+" ===
+" === auto-pairs
+" ===
+let g:AutoPairsShortcutToggle = '<C-c>p'
+let g:AutoPairsShortcutFastWrap = '<C-c>e'
+let g:AutoPairsShortcutJump = '<C-c>n'
+let g:AutoPairsShortcutBackInsert = '<C-c>b'
+au FileType vimrc let b:AutoPairs = {'(' : ')', '[' : ']', "'" : "'"}
+au FileType vim let b:AutoPairs = {'(' : ')', '[' : ']', "'" : "'"}
+
 
 
 " ===
@@ -1054,7 +1072,8 @@ let g:coc_global_extensions = [
 " 字符设置
 " 可作为 warning sign 和 error sign 的备选字符：
 let g:coc_status_error_sign = ''
-let g:coc_status_warning_sign = ''
+"let g:coc_status_warning_sign = ''
+let g:coc_status_warning_sign = ''
 
 set hidden
 
