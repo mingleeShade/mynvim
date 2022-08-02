@@ -130,7 +130,7 @@ inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 
-cnoremap <C-h> <Left>
+" cnoremap <C-h> <Left>
 cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
 cnoremap <C-l> <Right>
@@ -298,7 +298,33 @@ hi FoldColumn guibg=black guifg=grey20 ctermfg=4 ctermbg=7
 "           \     },
 "           \ }
 " endif
-" set clipboard+=unnamedplus
+
+let g:clipboard = {
+      \   'name': 'myClipboard',
+      \   'copy': {
+      \      '+': ['tmux', 'load-buffer', '-'],
+      \      '*': ['tmux', 'load-buffer', '-'],
+      \    },
+      \   'paste': {
+      \      '+': ['tmux', 'save-buffer', '-'],
+      \      '*': ['tmux', 'save-buffer', '-'],
+      \   },
+      \   'cache_enabled': 1,
+      \ }
+
+set clipboard+=unnamedplus
+
+" vnoremap  <leader>y  "+y
+" nnoremap  <leader>Y  "+yg_
+" nnoremap  <leader>y  "+y
+" nnoremap  <leader>yy  "+yy
+
+" " Paste from clipboard
+" nnoremap <leader>p "+p
+" nnoremap <leader>P "+P
+" vnoremap <leader>p "+p
+" vnoremap <leader>P "+P
+
 "==========扩展功能=========>
 
 
@@ -321,8 +347,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'liuchengxu/vista.vim'
 
 " tags 生成 && 管理
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'skywind3000/gutentags_plus'
+" Plug 'ludovicchabant/vim-gutentags'
+" Plug 'skywind3000/gutentags_plus'
 
 " 预览窗口增强，配合 tags 使用
 Plug 'skywind3000/vim-preview'
@@ -393,12 +419,53 @@ Plug 'sindrets/diffview.nvim'
 " 文本对齐插件
 Plug 'junegunn/vim-easy-align'
 
+" 跨ssh 复制
+Plug 'ojroques/vim-oscyank', {'branch': 'main'}
+
+" marp: 用 markdown 写 PPT
+Plug 'dhruvasagar/vim-marp'
+
+" 在浮窗打开内置终端
+Plug 'voldikss/vim-floaterm'
+
 call plug#end()
 
 "==========插件安装=========>
 
 
 "<=========插件设置==========
+
+
+" ===
+" === vim-floaterm 浮动窗口中打开终端
+" ===
+" 按键映射
+nnoremap   <silent>   <C-F7>    :FloatermNew<CR>
+tnoremap   <silent>   <C-F7>    <C-\><C-n>:FloatermNew<CR>
+nnoremap   <silent>   <C-F8>    :FloatermPrev<CR>
+tnoremap   <silent>   <C-F8>    <C-\><C-n>:FloatermPrev<CR>
+nnoremap   <silent>   <C-F9>    :FloatermNext<CR>
+tnoremap   <silent>   <C-F9>    <C-\><C-n>:FloatermNext<CR>
+nnoremap   <silent>   <C-F10>   :FloatermToggle<CR>
+tnoremap   <silent>   <C-F10>   <C-\><C-n>:FloatermToggle<CR>
+
+
+
+" ===
+" === vim-oscyank: 跨 ssh 复制
+" ===
+" 参考帖子：
+"   1. https://jdhao.github.io/2021/01/05/nvim_copy_from_remote_via_osc52/
+"   2. https://taoshu.in/vim/vim-copy-over-ssh.html
+" To copy after any yank operation
+autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif
+" By default you can copy up to 100000 characters at once. If your terminal supports it, you can raise that limit with:
+let g:oscyank_max_length = 1000000
+" The plugin treats tmux, screen and kitty differently than other terminal emulators.
+" The plugin should automatically detects the terminal used but you can bypass detection with:
+let g:oscyank_term = 'tmux'  " or 'screen', 'kitty', 'default'
+" By default a confirmation message is echoed after text is copied. This can be disabled with:
+let g:oscyank_silent = v:true  " or 1 for older versions of Vim
 
 
 " ===
@@ -598,6 +665,11 @@ endif
 " 设置字符，window上，打开 字符映射表，找到所需字体对应的字符，自行替换
 " 字符选项可参见
 " ~/.config/nvim/plugged/vim-airline/doc/airline.txt
+" 备用字符：
+" 1. 
+" 2. 
+" 3. 
+" 4. 
 let g:airline_symbols.branch = ''
 " let g:airline_left_sep = ''
 " let g:airline_left_alt_sep = ''
@@ -899,10 +971,10 @@ let g:gutentags_project_root = ['.root', '.project']
 " 所生成的数据文件的名称 "
 let g:gutentags_ctags_tagfile = '.tags'
 
-let g:gutentags_modules = []
-if executable('gtags-cscope') && executable('gtags')
-    let g:gutentags_modules += ['gtags_cscope']
-endif
+let g:gutentags_modules = ['ctags', 'cscope']
+" if executable('gtagscscope') && executable('gtags')
+"     let g:gutentags_modules += ['gtags_cscope']
+" endif
 
 " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录 "
 let s:vim_tags = expand('~/.cache/tags')
@@ -1060,12 +1132,13 @@ let g:coc_global_extensions = [
     \ 'coc-git',
     \ 'coc-xml',
     \ 'coc-vimlsp',
-    \ 'coc-jedi',
+    \ 'coc-pyright',
     \ 'coc-clangd',
-    \ 'coc-python',
     \ 'coc-translator',
     \ 'coc-snippets',
     \ 'coc-markdownlint',
+    \ 'coc-sumneko-lua',
+    \ 'coc-toml',
     \ 'coc-marketplace'
     \]
 
@@ -1210,10 +1283,10 @@ function! s:show_documentation()
     endif
 endfunction
 
-" 保持光标不动时，高亮显示符号及其引用(目前不起效果, 先注释)
+" 保持光标不动时，高亮显示符号及其引用
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" 使用 \rn 将符号重命名(目前不起效果，先注释).
+" 使用 \rn 将符号重命名.
 nmap <c-\>rn <Plug>(coc-rename)
 
 " 格式化选中的代码(需要lsp语言支持)
@@ -1338,7 +1411,15 @@ let g:snips_author="lihaiming"
 " ===
 " === coc-translator
 " ===
+" popup
 nmap ts <Plug>(coc-translator-p)
+vmap ts <Plug>(coc-translator-pv)
+" echo
+nmap te <Plug>(coc-translator-e)
+vmap te <Plug>(coc-translator-ev)
+" replace
+nmap tr <Plug>(coc-translator-r)
+vmap tr <Plug>(coc-translator-rv)
 
 
 
