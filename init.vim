@@ -414,7 +414,7 @@ Plug 'tpope/vim-fugitive'
 "diffview
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'sindrets/diffview.nvim'
+Plug 'sindrets/diffview.nvim', {'commit': '2d1f45282587d565cc4d84112490bc944c0b491d'}
 
 " 文本对齐插件
 Plug 'junegunn/vim-easy-align'
@@ -440,14 +440,14 @@ call plug#end()
 " === vim-floaterm 浮动窗口中打开终端
 " ===
 " 按键映射
-nnoremap   <silent>   <C-F7>    :FloatermNew<CR>
-tnoremap   <silent>   <C-F7>    <C-\><C-n>:FloatermNew<CR>
-nnoremap   <silent>   <C-F8>    :FloatermPrev<CR>
-tnoremap   <silent>   <C-F8>    <C-\><C-n>:FloatermPrev<CR>
-nnoremap   <silent>   <C-F9>    :FloatermNext<CR>
-tnoremap   <silent>   <C-F9>    <C-\><C-n>:FloatermNext<CR>
-nnoremap   <silent>   <C-F10>   :FloatermToggle<CR>
-tnoremap   <silent>   <C-F10>   <C-\><C-n>:FloatermToggle<CR>
+nnoremap    <silent>    ta  :FloatermNew<CR>
+tnoremap    <silent>    ta  <C-\><C-n>:FloatermNew<CR>
+nnoremap    <silent>    tp  :FloatermPrev<CR>
+tnoremap    <silent>    tp  <C-\><C-n>:FloatermPrev<CR>
+nnoremap    <silent>    tn  :FloatermNext<CR>
+tnoremap    <silent>    tn  <C-\><C-n>:FloatermNext<CR>
+nnoremap    <silent>    to  :FloatermToggle<CR>
+tnoremap    <silent>    to  <C-\><C-n>:FloatermToggle<CR>
 
 
 
@@ -601,13 +601,14 @@ vnoremap <silent> <C-M-r> :Farr<cr>
 " 修改按键映射，按键全映射参考：https://github.com/mg979/vim-visual-multi/wiki/Mappings#full-mappings-list
 " 其中 S-Left 和 S-Right 不再文档中，其被定义在
 " vim-visual-multi/autoload/vm/maps/all.vim 之中
+let g:VM_show_warnings = 0                              " 避免与 auto-pairs 的按键冲突
 let g:VM_maps = {}
 let g:VM_maps['Find Under']         = '<C-d>'           " replace C-n
 let g:VM_maps['Find Subword Under'] = '<C-d>'           " replace visual C-n
-let g:VM_maps["Select Cursor Down"] = '<M-j>'           " start selecting down
-let g:VM_maps["Select Cursor Up"]   = '<M-k>'           " start selecting up
-let g:VM_maps["Select l"]           = '<M-l>'           " 选择右移
-let g:VM_maps["Select h"]           = '<M-h>'           " 选择左移
+let g:VM_maps["Select Cursor Down"] = '<C-j>'           " start selecting down
+let g:VM_maps["Select Cursor Up"]   = '<C-k>'           " start selecting up
+let g:VM_maps["Select l"]           = '<C-l>'           " 选择右移
+let g:VM_maps["Select h"]           = '<C-h>'           " 选择左移
 
 
 
@@ -953,7 +954,7 @@ function! DefaultGenerateTags()
     :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --links=no -f .
 endfunction
 
-map <F8> :call SelectTagsFunc()<CR>
+"map <F8> :call SelectTagsFunc()<CR>
 "----------ctags----------
 
 " ===
