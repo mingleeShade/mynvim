@@ -1,5 +1,6 @@
 {
     "coc.preferences.extensionUpdateCheck": "daily",
+    "coc.preferences.maxFileSize": "25MB",
     "coc.preferences.formatOnSaveFiletypes": [
         "json",
         "xml"
@@ -12,9 +13,13 @@
     "markdownlint.onChange": false,
     "markdownlint.onSave": true,
     "diagnostic.refreshOnInsertMode": false,
+    "diagnostic.showUnused": false,
+    "diagnostic.warningSign": "",
+    "diagnostic.errorSign": "",
     "suggest.noselect": true,
     "suggest.enablePreselect": false,
     "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd",
+    "clangd.disableSnippetCompletion": false,
     "languageserver": {
         "golang": {
             "command": "gopls",
@@ -31,5 +36,20 @@
                 "usePlaceholders": true
             }
         }
-    }
+    },
+    "Lua.runtime.version": "Lua 5.2",
+    "Lua.diagnostics.globals": [
+        "Game",
+        "g_BingoMgr",
+        "pb",
+        "NULL_UUID",
+        "EResourceCostReason",
+        "currentTime",
+        "DAY_SECONDS",
+        "g_handleMgr",
+        "EResourceAddReason"
+    ],
+    "Lua.telemetry.enable": true,
+    "git.enableGutters": true,
+    "python.venvPath": "/home/haiming/.local/lib/python3.9"
 }

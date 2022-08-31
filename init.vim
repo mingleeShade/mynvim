@@ -358,6 +358,7 @@ Plug 'mingleeShade/quickr-preview.vim'
 
 " 代码格式化
 "Plug 'Chiel92/vim-autoformat'
+Plug 'mhartington/formatter.nvim'
 
 " 缩进对齐线
 "Plug 'nathanaelkane/vim-indent-guides'
@@ -566,8 +567,8 @@ set regexpengine=1
 set ignorecase smartcase
 let g:far#enable_undo=1
 
-nnoremap <silent> <C-M-f> :Farf<cr>
-vnoremap <silent> <C-M-f> :Farf<cr>
+nnoremap <silent> <C-c>f :Farf<cr>
+vnoremap <silent> <C-c>f :Farf<cr>
 
 " farr 界面快捷键说明
 " t: 忽略匹配的某一项,
@@ -575,8 +576,8 @@ vnoremap <silent> <C-M-f> :Farf<cr>
 " R: 替换
 " s: 保存
 " u: 撤销
-nnoremap <silent> <C-M-r> :Farr<cr>
-vnoremap <silent> <C-M-r> :Farr<cr>
+nnoremap <silent> <C-c>r :Farr<cr>
+vnoremap <silent> <C-c>r :Farr<cr>
 
 
 " ===
@@ -1120,6 +1121,17 @@ let g:formaters_cpp = ['allman']
 let g:formaters_c = ['allman']
 "autocmd BufWritePre *.cpp,*.h,*.c,*.hpp :Autoformat
 
+
+
+" ===
+" === formatter.nvim：代码格式化
+" ===
+nnoremap <silent> <leader>f :Format<CR>
+nnoremap <silent> <leader>F :FormatWrite<CR>
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost * FormatWrite
+augroup END
 
 
 " ===
