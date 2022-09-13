@@ -125,38 +125,39 @@ gopls 是 Golang 团队自行开发的 language server，可以通过 go 安装`
 
 - 安装依赖
 
-    ``` shell
-    sudo apt update
-    sudo apt install make libssl-dev libghc-zlib-dev libcurl4-gnutls-dev \
-             libexpat1-dev gettext unzip
-    ```
+``` shell
+sudo apt update
+sudo apt install make libssl-dev libghc-zlib-dev libcurl4-gnutls-dev \
+         libexpat1-dev gettext unzip
+```
 
 - 源码下载
 
-    ``` shell
-    git clone https://github.com/git/git
-    ```
+``` shell
+git clone https://github.com/git/git
+```
 
 - 编译安装
 
-    ``` shell
-    # 先切换 tag
-    cd git
-    # 展示所有的版本 tag
-    git tags
+``` shell
+# 先切换 tag
+cd git
+# 展示所有的版本 tag
+git tags
 
-    # 切换版本
-    git checkout v2.37.3
+# 切换版本
+git checkout v2.37.3
 
-    # 编译
-    make prefix=/usr/local all
+# 编译
+make prefix=/usr/local all
 
-    # 安装
-    sudo make prefix=/usr/local install
-    ```
+# 安装
+sudo make prefix=/usr/local install
+```
 
 - 参考
-    <https://www.howtoing.com/how-to-install-git-on-debian-9>
+
+<https://www.howtoing.com/how-to-install-git-on-debian-9>
 
 #### 依赖
 
