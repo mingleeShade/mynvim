@@ -19,6 +19,12 @@ sudo apt-get install neovim
 ```bash
 git clone https://github.com/neovim/neovim.git
 cd neovim/
+
+# 切到稳定节点
+# git checkout stable 
+# 切到 0.7.0 版本，最新的 DiffView 插件，需求 0.7.0 版本的 neovim
+git check 0.7.0
+
 make CMAKE_BUILD_TYPE=RelWithDebInfo
 sudo make install
 ```
@@ -104,6 +110,60 @@ gopls 是 Golang 团队自行开发的 language server，可以通过 go 安装`
 要注意 gopls 配置 gopls 会安装到`go env`显示的`GOPATH`目录下的`bin`目录中，需要将其加环境变量`PATH`中。
 
 > 注意：gopls 需要 go1.12 以上版本。
+
+## Git 支持
+
+### diffview
+
+#### diffview 作用
+
+- 查看当前 git 修改，`DiffViewOpen`
+- 比对两个提交节点（分支、tag）的代码差异，`DiffViewOpen commit1 commit2`
+- 解决冲突
+
+#### Git 2.31.0 安装
+
+- 安装依赖
+
+    ``` shell
+    sudo apt update
+    sudo apt install make libssl-dev libghc-zlib-dev libcurl4-gnutls-dev \
+             libexpat1-dev gettext unzip
+    ```
+
+- 源码下载
+
+    ``` shell
+    git clone https://github.com/git/git
+    ```
+
+- 编译安装
+
+    ``` shell
+    # 先切换 tag
+    cd git
+    # 展示所有的版本 tag
+    git tags
+
+    # 切换版本
+    git checkout v2.37.3
+
+    # 编译
+    make prefix=/usr/local all
+
+    # 安装
+    sudo make prefix=/usr/local install
+    ```
+
+- 参考
+    <https://www.howtoing.com/how-to-install-git-on-debian-9>
+
+#### 依赖
+
+- Git ≥ 2.31.0
+- Neovim ≥ 0.7.0
+- plenary.nvim
+- nvim-web-devicons (optional) For file icons
 
 ## 其他外部工具安装
 

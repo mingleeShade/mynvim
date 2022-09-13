@@ -415,7 +415,8 @@ Plug 'tpope/vim-fugitive'
 "diffview
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'sindrets/diffview.nvim', {'commit': '2d1f45282587d565cc4d84112490bc944c0b491d'}
+"Plug 'sindrets/diffview.nvim', {'commit': '2d1f45282587d565cc4d84112490bc944c0b491d'}
+Plug 'sindrets/diffview.nvim'
 
 " 文本对齐插件
 Plug 'junegunn/vim-easy-align'
@@ -429,6 +430,8 @@ Plug 'dhruvasagar/vim-marp'
 " 在浮窗打开内置终端
 Plug 'voldikss/vim-floaterm'
 
+" 日志文件高亮
+Plug 'mtdl9/vim-log-highlighting'
 call plug#end()
 
 "==========插件安装=========>
@@ -441,14 +444,15 @@ call plug#end()
 " === vim-floaterm 浮动窗口中打开终端
 " ===
 " 按键映射
-nnoremap    <silent>    ta  :FloatermNew<CR>
-tnoremap    <silent>    ta  <C-\><C-n>:FloatermNew<CR>
-nnoremap    <silent>    tp  :FloatermPrev<CR>
-tnoremap    <silent>    tp  <C-\><C-n>:FloatermPrev<CR>
-nnoremap    <silent>    tn  :FloatermNext<CR>
-tnoremap    <silent>    tn  <C-\><C-n>:FloatermNext<CR>
-nnoremap    <silent>    to  :FloatermToggle<CR>
-tnoremap    <silent>    to  <C-\><C-n>:FloatermToggle<CR>
+nnoremap    <silent>    <leader>ta  :FloatermNew<CR>
+tnoremap    <silent>    <leader>ta  <C-\><C-n>:FloatermNew<CR>
+nnoremap    <silent>    <leader>tp  :FloatermPrev<CR>
+tnoremap    <silent>    <leader>tp  <C-\><C-n>:FloatermPrev<CR>
+nnoremap    <silent>    <leader>tn  :FloatermNext<CR>
+tnoremap    <silent>    <leader>tn  <C-\><C-n>:FloatermNext<CR>
+nnoremap    <silent>    <leader>to  :FloatermToggle<CR>
+tnoremap    <silent>    <leader>to  <C-\><C-n>:FloatermToggle<CR>
+let g:floaterm_position = 'right'
 
 
 
