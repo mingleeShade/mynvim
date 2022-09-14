@@ -127,8 +127,8 @@ gopls 是 Golang 团队自行开发的 language server，可以通过 go 安装`
 
 ``` shell
 sudo apt update
-sudo apt install make libssl-dev libghc-zlib-dev libcurl4-gnutls-dev
-libexpat1-dev gettext unzip
+sudo apt install make libssl-dev libghc-zlib-dev libcurl4-gnutls-dev \
+         libexpat1-dev gettext unzip
 ```
 
 - 源码下载

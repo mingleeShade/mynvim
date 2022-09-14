@@ -357,8 +357,8 @@ Plug 'skywind3000/vim-preview'
 Plug 'mingleeShade/quickr-preview.vim'
 
 " 代码格式化
-"Plug 'Chiel92/vim-autoformat'
-Plug 'mhartington/formatter.nvim'
+"Plug 'mhartington/formatter.nvim'
+Plug 'vim-autoformat/vim-autoformat'
 
 " 缩进对齐线
 "Plug 'nathanaelkane/vim-indent-guides'
@@ -370,6 +370,9 @@ Plug 'kevinhwang91/rnvimr'
 " 文件目录浏览
 Plug 'preservim/nerdtree'
 "Plug 'preservim/tagbar'
+
+" 项目配置管理
+Plug 'VonHeikemen/project-settings.nvim'
 
 " 补全插件 coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -416,7 +419,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 "Plug 'sindrets/diffview.nvim', {'commit': '2d1f45282587d565cc4d84112490bc944c0b491d'}
-Plug 'sindrets/diffview.nvim'
+" 使用 fork 出来的
+Plug 'mingleeShade/diffview.nvim'
 
 " 文本对齐插件
 Plug 'junegunn/vim-easy-align'
@@ -560,6 +564,12 @@ let g:gitgutter_preview_win_floating = 1
 " let g:gitgutter_sign_removed_first_line = '^^'
 " let g:gitgutter_sign_removed_above_and_below = '{'
 " let g:gitgutter_sign_modified_removed = ''
+
+
+" ===
+" === diffview
+" ===
+" diffview 主要配置在 lua，目录：~/.config/nvim/plugged/diffview.nvim/lua/diffview/config.lua
 
 
 
@@ -834,6 +844,11 @@ endfunction
 
 " 设置 NERDTree 快捷键
 map <F6> :NERDTree<CR>
+
+
+" ===
+" === project-settings：可以用来配置不同项目的配置
+" ===
 
 
 
@@ -1117,26 +1132,29 @@ let g:indentLine_conceallevel = 1
 
 
 
-" ===
-" === autoformat：代码格式化
-" ===
-"autoformat: 代码格式化，首先需要安装astyle
-let g:formatdef_allman = '"astyle --options=~/.astylerc"'
-let g:formaters_cpp = ['allman']
-let g:formaters_c = ['allman']
-"autocmd BufWritePre *.cpp,*.h,*.c,*.hpp :Autoformat
-
-
 
 " ===
 " === formatter.nvim：代码格式化
 " ===
-nnoremap <silent> <leader>f :Format<CR>
-nnoremap <silent> <leader>F :FormatWrite<CR>
-augroup FormatAutogroup
-  autocmd!
-  autocmd BufWritePost * FormatWrite
-augroup END
+" nnoremap <silent> <leader>cf :Format<CR>
+" nnoremap <silent> <leader>cF :FormatWrite<CR>
+" augroup FormatAutogroup
+"   autocmd!
+"   autocmd BufWritePost * FormatWrite
+" augroup END
+
+
+" ===
+" === vim-autoformat：代码格式化
+" ===
+if filereadable('.astylerc')
+    " 如果工程目录下存在 .astylerc 文件，则启用 astyle 格式化
+    " 需要先安装 astyle 工具
+    let g:formatdef_astyle = '"astyle --options=.astylerc"'
+    let g:formaters_cpp = ['astyle']
+    let g:formaters_c = ['astyle']
+    autocmd BufWritePre *.cpp,*.h,*.c,*.hpp :Autoformat
+endif
 
 
 " ===
@@ -1181,15 +1199,26 @@ set updatetime=300
 " endif
 
 " TAB触发补全
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
+" Enter 键自动选中第一个补全项
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " 设置主动触发快捷键
@@ -1199,9 +1228,6 @@ else
     inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" Enter 键自动选中第一个补全项
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " 函数跳转快捷键 不调用原始接口
 " nmap <silent> gd <Plug>(coc-definition)
@@ -1344,14 +1370,13 @@ xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
+nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Down>"
+inoremap <expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Up>"
+vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+
 
 " 选中下一个范围的内容，从 单词、行、段落到整个函数体
 " Use CTRL-S for selections ranges.
@@ -1466,4 +1491,10 @@ function! Debug()
         :redir END
     endif
 endfunction
-map <F5> :call Debug() <CR>
+map <F5> :call Debug()<CR>
+
+function! DebugScroll()
+    echo 'has scroll: ' . coc#float#has_scroll()
+endfunction
+
+"inoremap <silent> <leader>qd <c-\><c-o>:call DebugScroll()<CR>
