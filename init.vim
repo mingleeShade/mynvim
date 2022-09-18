@@ -103,7 +103,7 @@ set nowritebackup
 
 " 加载配置
 nnoremap <leader>so :source $MYVIMRC <CR>
-nnoremap <silent> <leader>cp :silent !cp ~/my_config/mynvim/init.vim ~/.config/nvim <CR>
+nnoremap <silent> <leader>cp :silent !cp ~/my_config/mynvim/init.vim ~/.config/nvim/ <CR>
 
 " 在c语言环境中快捷键显示函数名称
 function! ShowFuncName()
