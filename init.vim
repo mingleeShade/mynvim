@@ -103,6 +103,7 @@ set nowritebackup
 
 " 加载配置
 nnoremap <leader>so :source $MYVIMRC <CR>
+nnoremap <silent> <leader>cp :silent !cp ~/my_config/mynvim/init.vim ~/.config/nvim <CR>
 
 " 在c语言环境中快捷键显示函数名称
 function! ShowFuncName()
@@ -398,6 +399,9 @@ Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 " 查找关键字和批量替换
 Plug 'brooth/far.vim'
 
+" 全局查找定义和引用, fork 自 pechorin/any-jump.vim
+Plug 'mingleeShade/any-jump.vim'
+
 " 批量注释
 Plug 'preservim/nerdcommenter'
 
@@ -592,6 +596,22 @@ vnoremap <silent> <C-c>f :Farf<cr>
 " u: 撤销
 nnoremap <silent> <C-c>r :Farr<cr>
 vnoremap <silent> <C-c>r :Farr<cr>
+
+
+
+" ===
+" === any-jump: 全局搜索定义和引用
+" ===
+" Custom ignore files
+" default is: ['*.tmp', '*.temp']
+let g:any_jump_ignored_files = ['*.tmp', '*.temp', '*.cs', '*.html', '*.xml', '*.i']
+" 使用 ripgrep 进行搜索有时会有如下报错：
+" E474: Unidentified byte: include/video_font_data.h: PCRE2: error matching: UTF-8 error: isolated byte with 0x80 bit set
+" E474: Failed to parse include/video_font_data.h: PCRE2: error matching: UTF-8 error: isolated byte with 0x80 bit set
+" 此时需要修改 ~/.config/nvim/plugged/any-jump.vim/autoload/search.vim :
+" - let s:rg_base_cmd = "rg -n --auto-hybrid-regex --json"
+" + let s:rg_base_cmd = "rg -n --auto-hybrid-regex --json --no-pcre2-unicode"
+
 
 
 " ===
@@ -1213,7 +1233,7 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 " Enter 键自动选中第一个补全项
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! CheckBackspace() abort
@@ -1354,9 +1374,9 @@ endfunction
 
 " 代码修复
 " Apply AutoFix to problem on the current line.
-nmap <leader>qf :CocFix <CR>
+nmap <leader>qf :silent call CocActionAsync('doQuickfix') <CR>
 nmap <leader>dn <Plug>(coc-diagnostic-next)
-nmap <leader>dp <Plug>(coc-diagnostic-next)
+nmap <leader>dp <Plug>(coc-diagnostic-prev)
 
 " 通过快捷键操作选中函数和类定义域内的内容
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -1384,23 +1404,23 @@ vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
-" " Mappings for CoCList
-" " Show all diagnostics.
-" nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-" " Manage extensions.
-" nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-" " Show commands.
-" nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-" " Find symbol of current document.
-" nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-" " Search workspace symbols.
-" nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-" " Do default action for next item.
-" nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-" " Do default action for previous item.
-" nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-" " Resume latest coc list.
-" nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
 
