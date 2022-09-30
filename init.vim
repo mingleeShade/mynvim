@@ -380,6 +380,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " 代码片段补全
 "Plug 'SirVer/ultisnips'
 Plug 'mingleeShade/vim-snippets'
+" LSP 配置管理？
+Plug 'neovim/nvim-lspconfig'
 
 " 简单跳转头文件插件，与 coc-clangd 的 clangd.switchSourceHeader 命令互为补充
 Plug 'vim-scripts/a.vim'
@@ -597,6 +599,10 @@ vnoremap <silent> <C-c>f :Farf<cr>
 nnoremap <silent> <C-c>r :Farr<cr>
 vnoremap <silent> <C-c>r :Farr<cr>
 
+" 设置忽略文件
+" [ '<path-to-far.vim-repo>/farignore' ]
+let g:far#ignore_files = ['~/.config/nvim/plugged/far.vim/farignore', '~/.config/nvim/cpp_farignore']
+let g:far#source='rgnvim'
 
 
 " ===
@@ -604,13 +610,19 @@ vnoremap <silent> <C-c>r :Farr<cr>
 " ===
 " Custom ignore files
 " default is: ['*.tmp', '*.temp']
-let g:any_jump_ignored_files = ['*.tmp', '*.temp', '*.cs', '*.html', '*.xml', '*.i']
+let g:any_jump_ignored_files = ['*.tmp', '*.temp', '*.cs', '*.html', '*.xml', '*.i', '*.log', 'doc/*']
+
 " 使用 ripgrep 进行搜索有时会有如下报错：
 " E474: Unidentified byte: include/video_font_data.h: PCRE2: error matching: UTF-8 error: isolated byte with 0x80 bit set
 " E474: Failed to parse include/video_font_data.h: PCRE2: error matching: UTF-8 error: isolated byte with 0x80 bit set
 " 此时需要修改 ~/.config/nvim/plugged/any-jump.vim/autoload/search.vim :
 " - let s:rg_base_cmd = "rg -n --auto-hybrid-regex --json"
 " + let s:rg_base_cmd = "rg -n --auto-hybrid-regex --json --no-pcre2-unicode"
+
+" Any-jump window size & position options
+let g:any_jump_window_width_ratio  = 0.9
+let g:any_jump_window_height_ratio = 0.9
+let g:any_jump_window_top_offset   = 1
 
 
 
@@ -736,6 +748,11 @@ let g:airline_symbols.whitespace = ''
 let g:NERDSpaceDelims = 1
 " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDDefaultAlign = 'left'
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } , 'cpp': {'left':'//','right':''}}
+let g:NERDAltDelims_cpp = 1
+let g:NERDCompactSexyComs = 0
+nnoremap <silent> <leader>c} V}:call NERDComment('x', 'toggle')<CR>
+nnoremap <silent> <leader>c{ V{:call NERDComment('x', 'toggle')<CR>
 
 
 " ===
@@ -1194,6 +1211,8 @@ let g:coc_global_extensions = [
     \ 'coc-markdownlint',
     \ 'coc-sumneko-lua',
     \ 'coc-toml',
+    \ 'coc-tsserver',
+    \ 'coc-sh',
     \ 'coc-marketplace'
     \]
 
@@ -1462,6 +1481,13 @@ nnoremap <c-c>a :CocCommand clangd.switchSourceHeader <CR>
 nnoremap <c-c>v :CocCommand clangd.switchSourceHeader vsplit <CR>
 " 显示符号信息
 nnoremap <c-c>s :CocCommand clangd.symbolInfo <CR>
+
+
+
+" ===
+" === coc-sh: bash lsp
+" ===
+"lua require'lspconfig'.bashls.setup{}
 
 
 " ===

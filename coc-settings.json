@@ -5,6 +5,18 @@
         "json",
         "xml"
     ],
+    "workspace.ignoredFolders": [
+        "$HOME",
+        "./git/",
+        "./svn/"
+    ],
+    "workspace.ignoredFiletypes": [
+        "*.a",
+        "*.o",
+        "*.so",
+        "*.d"
+    ],
+    "workspace.openResourceCommand": "tab drop",
     "git.addGBlameToBufferVar": true,
     "git.addGBlameToVirtualText": true,
     "git.showCommitInFloating": false,
@@ -50,6 +62,8 @@
         "EResourceAddReason"
     ],
     "Lua.telemetry.enable": true,
+    "tsserver.log": "verbose",
+    "sh.enable": true,
     "git.enableGutters": true,
     "python.venvPath": "/home/haiming/.local/lib/python3.9"
 }
