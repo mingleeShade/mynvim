@@ -841,7 +841,7 @@ noremap <leader>sc :History:<CR>
 noremap <leader>ss :History/<CR>
 
 " == fzf设置
-let g:fzf_preview_window = 'right:60%'
+let g:fzf_preview_window = ['right,50%,<70(up,40%)', 'ctrl-/']
 let g:fzf_commit_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
 function! s:list_buffers()
