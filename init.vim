@@ -381,7 +381,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'SirVer/ultisnips'
 Plug 'mingleeShade/vim-snippets'
 " LSP 配置管理？
-Plug 'neovim/nvim-lspconfig'
+"Plug 'neovim/nvim-lspconfig'
 
 " 简单跳转头文件插件，与 coc-clangd 的 clangd.switchSourceHeader 命令互为补充
 Plug 'vim-scripts/a.vim'
@@ -396,7 +396,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'kien/ctrlp.vim'
 
 " 模糊查找 LeaderF
-Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+"Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 
 " 查找关键字和批量替换
 Plug 'brooth/far.vim'
@@ -463,6 +463,7 @@ tnoremap    <silent>    <leader>tn  <C-\><C-n>:FloatermNext<CR>
 nnoremap    <silent>    <leader>to  :FloatermToggle<CR>
 tnoremap    <silent>    <leader>to  <C-\><C-n>:FloatermToggle<CR>
 let g:floaterm_position = 'right'
+let g:floaterm_width = 0.5
 
 
 
@@ -933,7 +934,7 @@ let g:lightline = {
 " === cscope: 文件引用跳转插件
 " ===
 " 增加 cscope 数据库时，给出消息
-set nocscopeverbose
+"set nocscopeverbose
 
 " 设置是否使用 quickfix 窗口来线上cscope结果
 "set cscopequickfix=s-,c-,d-,i-,t-,e-
