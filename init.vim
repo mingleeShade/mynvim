@@ -404,7 +404,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'kien/ctrlp.vim'
 
 " 模糊查找 LeaderF
-"Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 
 " 查找关键字和批量替换
 Plug 'brooth/far.vim'
