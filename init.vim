@@ -607,6 +607,9 @@ vnoremap <silent> <C-c>f :Farf<cr>
 " u: 撤销
 nnoremap <silent> <C-c>r :Farr<cr>
 vnoremap <silent> <C-c>r :Farr<cr>
+" 如何debug
+" 打开 g:far#debug, 重新打开 vi 并重复操作，日志会写入：~/far.vim.log
+let g:far#debug = 1
 
 " 设置忽略文件
 " [ '<path-to-far.vim-repo>/farignore' ]
