@@ -94,6 +94,14 @@ set encoding=utf-8
 " 设置不保存备份文件
 set nobackup
 set nowritebackup
+
+function! Blade(...)
+    let l:old_makeprg = &makeprg
+    setlocal makeprg=blade
+    execute "make " . join(a:000)
+    let &makeprg=old_makeprg
+endfunction
+command! -complete=dir -nargs=* Blade call Blade('<args>')
 "----------其他----------
 
 "==========基础设置=========>
