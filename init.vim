@@ -94,6 +94,9 @@ set encoding=utf-8
 " 设置不保存备份文件
 set nobackup
 set nowritebackup
+
+" 加载本地配置
+source ~/.config/nvim/local.vim
 "----------其他----------
 
 "==========基础设置=========>
@@ -103,7 +106,13 @@ set nowritebackup
 
 " 加载配置
 nnoremap <leader>so :source $MYVIMRC <CR>
-nnoremap <silent> <leader>cp :silent !cp ~/my_config/mynvim/init.vim ~/.config/nvim/ <CR>
+
+function! CopyConfig()
+    silent !cp ~/my_config/mynvim/init.vim ~/.config/nvim/
+    silent !cp ~/my_config/mynvim/local.vim ~/.config/nvim/
+endfunction
+
+nnoremap <leader>cp :call CopyConfig() <CR>
 
 " 在c语言环境中快捷键显示函数名称
 function! ShowFuncName()
@@ -396,7 +405,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'kien/ctrlp.vim'
 
 " 模糊查找 LeaderF
-"Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 
 " 查找关键字和批量替换
 Plug 'brooth/far.vim'

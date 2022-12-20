@@ -1,0 +1,6 @@
+"===
+"=== 这里配置本地化相关配置，比如一些进程路径，使用时，拷贝成 local.vim 再行修改
+"===
+
+"配置 python 目录
+let g:python3_host_prog="/usr/local/bin/python3.6"
