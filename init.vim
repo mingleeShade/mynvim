@@ -95,6 +95,9 @@ set encoding=utf-8
 set nobackup
 set nowritebackup
 
+" 加载本地配置
+source ~/.config/nvim/local.vim
+
 function! Blade(...)
     let l:old_makeprg = &makeprg
     setlocal makeprg=blade
@@ -111,7 +114,13 @@ command! -complete=dir -nargs=* Blade call Blade('<args>')
 
 " 加载配置
 nnoremap <leader>so :source $MYVIMRC <CR>
-nnoremap <silent> <leader>cp :silent !cp ~/my_config/mynvim/init.vim ~/.config/nvim/ <CR>
+
+function! CopyConfig()
+    silent !cp ~/my_config/mynvim/init.vim ~/.config/nvim/
+    silent !cp ~/my_config/mynvim/local.vim ~/.config/nvim/
+endfunction
+
+nnoremap <leader>cp :call CopyConfig() <CR>
 
 " 在c语言环境中快捷键显示函数名称
 function! ShowFuncName()
