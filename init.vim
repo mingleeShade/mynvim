@@ -458,7 +458,8 @@ Plug 'dhruvasagar/vim-marp'
 Plug 'voldikss/vim-floaterm'
 
 " 日志文件高亮
-Plug 'mtdl9/vim-log-highlighting'
+"Plug 'mtdl9/vim-log-highlighting'
+Plug 'mingleeShade/vim-log-syntax'
 call plug#end()
 
 "==========插件安装=========>
