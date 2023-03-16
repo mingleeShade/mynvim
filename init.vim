@@ -118,6 +118,7 @@ nnoremap <leader>so :source $MYVIMRC <CR>
 function! CopyConfig()
     silent !cp ~/my_config/mynvim/init.vim ~/.config/nvim/
     silent !cp ~/my_config/mynvim/local.vim ~/.config/nvim/
+    silent !cp ~/my_config/mynvim/lua/*.lua ~/.config/nvim/lua/
 endfunction
 
 nnoremap <leader>cp :call CopyConfig() <CR>
@@ -399,6 +400,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mingleeShade/vim-snippets'
 " LSP 配置管理？
 "Plug 'neovim/nvim-lspconfig'
+"Plug 'OmniSharp/omnisharp-vim'
 
 " 简单跳转头文件插件，与 coc-clangd 的 clangd.switchSourceHeader 命令互为补充
 Plug 'vim-scripts/a.vim'
@@ -461,6 +463,10 @@ Plug 'voldikss/vim-floaterm'
 "Plug 'mtdl9/vim-log-highlighting'
 Plug 'mingleeShade/vim-log-syntax'
 call plug#end()
+
+
+"=== Packer.nvim
+lua require('plugins')
 
 "==========插件安装=========>
 
@@ -1228,6 +1234,7 @@ let g:coc_global_extensions = [
     \ 'coc-vimlsp',
     \ 'coc-pyright',
     \ 'coc-clangd',
+    \ 'coc-csharp-ls',
     \ 'coc-translator',
     \ 'coc-snippets',
     \ 'coc-markdownlint',
