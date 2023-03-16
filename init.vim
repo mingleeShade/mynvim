@@ -449,7 +449,7 @@ Plug 'mingleeShade/diffview.nvim'
 Plug 'junegunn/vim-easy-align'
 
 " 跨ssh 复制
-Plug 'ojroques/vim-oscyank', {'branch': 'main'}
+Plug 'ojroques/vim-oscyank', {'commit': 'e6298736a7835bcb365dd45a8e8bfe86d935c1f8'}
 
 " marp: 用 markdown 写 PPT
 Plug 'dhruvasagar/vim-marp'
@@ -614,8 +614,8 @@ vnoremap <silent> <C-c>f :Farf<cr>
 " R: 替换
 " s: 保存
 " u: 撤销
-nnoremap <silent> <C-c>r :Farr<cr>
-vnoremap <silent> <C-c>r :Farr<cr>
+nnoremap <C-c>r :Farr<cr>
+vnoremap <C-c>r :Farr<cr>
 " 如何debug
 " 打开 g:far#debug, 重新打开 vi 并重复操作，日志会写入：~/far.vim.log
 let g:far#debug = 1
