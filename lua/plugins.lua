@@ -27,6 +27,15 @@ return require('packer').startup(function(use)
         }
     })
 
+    -- plenary.nvim 依赖插件
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
+    }
+
     -- nvim-osc52
     -- use ({
     --     'ojroques/nvim-osc52',
