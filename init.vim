@@ -119,6 +119,7 @@ function! CopyConfig()
     silent !cp ~/my_config/mynvim/init.vim ~/.config/nvim/
     silent !cp ~/my_config/mynvim/local.vim ~/.config/nvim/
     silent !cp ~/my_config/mynvim/lua/*.lua ~/.config/nvim/lua/
+    :PackerCompile
 endfunction
 
 nnoremap <leader>cp :call CopyConfig() <CR>

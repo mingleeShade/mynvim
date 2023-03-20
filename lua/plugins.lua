@@ -13,16 +13,14 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     -- ChatGPT
-    use({
+    use ({
         "jackMort/ChatGPT.nvim",
         config = function()
-            require("chatgpt").setup({
-                -- optional configuration
-            })
+            require("chatgpt_cfg").setup()
         end,
         requires = {
             "MunifTanjim/nui.nvim",
-            "nvim-lua/plenary.nvim",
+            --"nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim"
         }
     })
@@ -32,6 +30,7 @@ return require('packer').startup(function(use)
         'nvim-treesitter/nvim-treesitter',
         run = function()
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            print("in treesitter")
             ts_update()
         end,
     }

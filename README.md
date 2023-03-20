@@ -5,7 +5,7 @@ NVIM 配置
 ## 安装 neovim
 
 ### 命令行安装
-  
+
 ``` bash
 sudo apt-get install neovim
 ```
@@ -21,7 +21,7 @@ git clone https://github.com/neovim/neovim.git
 cd neovim/
 
 # 切到稳定节点
-# git checkout stable 
+# git checkout stable
 # 切到 0.7.0 版本，最新的 DiffView 插件，需求 0.7.0 版本的 neovim
 git check 0.7.0
 
@@ -35,7 +35,20 @@ sudo make install
 
 ## 安装插件管理器
 
+### plug.vim
+
 init.vim 生效后首次打开 nvim 后自动安装 plug.vim
+
+### packer.nvim
+
+packer 用来管理 lua 插件
+
+安装方法：
+
+```shell
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+        ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+```
 
 ## coc.vim
 
@@ -166,6 +179,16 @@ sudo make prefix=/usr/local install
 - plenary.nvim
 - nvim-web-devicons (optional) For file icons
 
+## ChatGPT
+
+### ChatGPT.nvim
+
+使用 packer.nvim 安装。
+
+### curl
+
+依赖高版本的 curl，安装 curl 方法：<https://flowus.cn/4263e38e-57db-4924-ae13-910011a49ba4>
+
 ## 其他外部工具安装
 
 ### ranger
@@ -211,7 +234,7 @@ telnet **<TAB>
 
 ripgrep 是非常快速的模糊查找字符串工具，效率是普通工具的几倍甚至几十倍，可以配合 fzf 使用。
 
-安装指南："https://github.com/BurntSushi/ripgrep#installation"。
+安装指南：<https://github.com/BurntSushi/ripgrep#installation>。
 
 - debian 用户可以直接下载 .deb 安装
 
@@ -222,6 +245,21 @@ ripgrep 是非常快速的模糊查找字符串工具，效率是普通工具的
 
 - debian 10(buster) 用用户可以直接使用命令`sudo apt-get install ripgrep`进行安装。
 - 如果使用源码安装的方式，需要先安装 Rust("https://www.rust-lang.org/")。
+
+### tree-sitter
+
+tree-sitter 是 nvim-treesitter 插件所需要的外部工具。
+
+github 仓库：<https://github.com/tree-sitter/tree-sitter>
+
+安装方法
+
+```bash
+    wget https://github.com/tree-sitter/tree-sitter/releases/download/v0.20.3/tree-sitter-linux-x64.gz
+    gunzip tree-sitter-linux-x64.gz
+    mv tree-sitter-linux-x64 ~/.local/bin/
+    sudo ln -sf $HOME/.local/bin/tree-sitter-linux-x64 /usr/bin/tree-sitter
+```
 
 ## 健康检查
 
