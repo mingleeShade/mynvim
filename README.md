@@ -308,6 +308,7 @@ cat ~/git/config
 
 - nerdfonts字体下载："https://www.nerdfonts.com/font-downloads"
 - 建议采用字体: `Consolas Nerd Font Complete Mono`, github 仓库: "https://github.com/zdszero/Consolas-with-Yahei-Nerd-Font"
+- 可以通过 `字符映射表` 来选择某个字符
 - 其他中文字体
     -- 图标较少但字宽OK："https://github.com/mingleeShade/YaHei-Consolas-Hybrid-For-Powerline"
     -- 图标齐全，但字宽显示有问题："https://github.com/mingleeShade/yahei-fira-icon-hybrid-font"

@@ -352,6 +352,10 @@ set clipboard+=unnamedplus
 
 call plug#begin('~/.config/nvim/plugged')
 
+" 前置公共插件
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'nvim-lua/plenary.nvim'
+
 " 配色插件
 Plug 'theniceboy/vim-deus'
 Plug 'altercation/vim-colors-solarized'
@@ -362,6 +366,9 @@ Plug 'chxuan/change-colorscheme'
 " airline 状态栏插件
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+" buffer 管理插件，标签栏美化
+Plug 'romgrk/barbar.nvim'
 
 " 查看 tag 和符号
 Plug 'liuchengxu/vista.vim'
@@ -441,9 +448,8 @@ Plug 'dhruvasagar/vim-table-mode'
 " Git支持
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+
 "diffview
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'nvim-lua/plenary.nvim'
 "Plug 'sindrets/diffview.nvim', {'commit': '2d1f45282587d565cc4d84112490bc944c0b491d'}
 " 使用 fork 出来的
 Plug 'mingleeShade/diffview.nvim'
@@ -767,6 +773,82 @@ let g:airline_symbols.whitespace = ''
 " let g:airline_symbols.maxlinenr = '☰ '
 " let g:airline_symbols.whitespace = '☲ '
 
+
+
+" ===
+" === barbar.nvim: buffer 管理 && 标签栏美化
+" ===
+" Move to previous/next
+nnoremap <silent>    <Space>, <Cmd>BufferPrevious<CR>
+nnoremap <silent>    <Space>. <Cmd>BufferNext<CR>
+
+" Re-order to previous/next
+nnoremap <silent>    <Space>< <Cmd>BufferMovePrevious<CR>
+nnoremap <silent>    <Space>> <Cmd>BufferMoveNext<CR>
+
+" Goto buffer in position...
+nnoremap <silent>    <Space>1 <Cmd>BufferGoto 1<CR>
+nnoremap <silent>    <Space>2 <Cmd>BufferGoto 2<CR>
+nnoremap <silent>    <Space>3 <Cmd>BufferGoto 3<CR>
+nnoremap <silent>    <Space>4 <Cmd>BufferGoto 4<CR>
+nnoremap <silent>    <Space>5 <Cmd>BufferGoto 5<CR>
+nnoremap <silent>    <Space>6 <Cmd>BufferGoto 6<CR>
+nnoremap <silent>    <Space>7 <Cmd>BufferGoto 7<CR>
+nnoremap <silent>    <Space>8 <Cmd>BufferGoto 8<CR>
+nnoremap <silent>    <Space>9 <Cmd>BufferGoto 9<CR>
+nnoremap <silent>    <Space>0 <Cmd>BufferLast<CR>
+
+" Pin/unpin buffer
+nnoremap <silent>    <Space>bp <Cmd>BufferPin<CR>
+
+" Close buffer
+nnoremap <silent>    <Space>bc <Cmd>BufferClose<CR>
+
+" Wipeout buffer
+"                          :BufferWipeout
+" Close commands
+"                          :BufferCloseAllButCurrent
+"                          :BufferCloseAllButVisible
+"                          :BufferCloseAllButPinned
+"                          :BufferCloseAllButCurrentOrPinned
+"                          :BufferCloseBuffersLeft
+"                          :BufferCloseBuffersRight
+
+" Magic buffer-picking mode
+nnoremap <silent> <Space>bs   <Cmd>BufferPick<CR>
+nnoremap <silent> <Space>br    <Cmd>BufferPickDelete<CR>
+
+" Sort automatically by...
+nnoremap <silent> <Space>bn <Cmd>BufferOrderByBufferNumber<CR>
+nnoremap <silent> <Space>bb <Cmd>BufferOrderByDirectory<CR>
+nnoremap <silent> <Space>bl <Cmd>BufferOrderByLanguage<CR>
+nnoremap <silent> <Space>bw <Cmd>BufferOrderByWindowNumber<CR>
+
+" Other:
+" :BarbarEnable - enables barbar (enabled by default)
+" :BarbarDisable - very bad command, should never be used
+
+let bufferline = get(g:, 'bufferline', {})
+
+let bufferline.auto_hide = v:false
+
+let bufferline.clickable = v:true
+
+let bufferline.icons = 'both'
+
+let bufferline.icon_pinned = '車'
+let bufferline.icon_close_tab = ''
+let bufferline.icon_separator_active = '▎'
+let bufferline.icon_separator_inactive = '▎'
+
+" Enables / disables diagnostic symbols
+" ERROR / WARN / INFO / HINT
+let bufferline.diagnostics = [
+  \ {'enabled': v:true, 'icon': 'ﬀ'},
+  \ {'enabled': v:false},
+  \ {'enabled': v:false},
+  \ {'enabled': v:true},
+\]
 
 
 
