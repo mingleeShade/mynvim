@@ -1011,7 +1011,7 @@ map <F6> :NERDTree<CR>
 " === vista.vim: tagbar 替代品, 支持 lsp 和 异步处理
 " === vista.vim 不支持原始的 Exuberant Ctags,
 " 如果 g:vista_default_executive 设置为 'ctags', 则需要先安装 Universal-ctags(https://github.com/universal-ctags/ctags) 方可使用
-noremap <c-l> :Vista!!<CR>
+noremap <leader>v :Vista!!<CR>
 noremap tc :silent! Vista finder coc<CR>
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 let g:vista_default_executive = 'coc'

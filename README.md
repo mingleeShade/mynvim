@@ -302,6 +302,48 @@ cat ~/git/config
  insteadOf = https://gitlab.com/
 ```
 
+### coc-sh 报错
+
+打开 `.sh` 文件时出现：`[coc.nvim] bash-language-server client: couldn't create connection
+to server.`， `:CocCommand workspace.showOutput sh` 显示：
+`Error: Cannot find module 'node:child_process'`。
+
+这个问题可能是由于 `Node.js` 的版本引起的，出问题的 node 版本是 `v14.16.1`，将其升级到 `v14.18.3` 即可。
+
+可以使用 nvm 来安装 `Node.js`，nvm 以及 Node.js 的安装方案：
+
+1. 安装 nvm
+
+    ```bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+    ```
+
+2. 重启终端或加载 nvm
+
+    安装完成后，需要重启终端或者使用以下命令加载 nvm：
+
+    ```bash
+    source ~/.bashrc
+    ```
+
+3. 安装 Node.js
+
+    使用以下命令安装 Node.js：
+
+    ```bash
+    nvm install <version>
+    ```
+
+    其中 `<version>` 是你想要安装的 Node.js 版本号，例如 `14.17.0`。
+
+4. 切换到新安装的 Node.js 版本
+
+    使用以下命令切换到新安装的 Node.js 版本：
+
+    ```bash
+    nvm use <version>
+    ```
+
 ## 其他
 
 ### 字体问题

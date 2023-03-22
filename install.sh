@@ -2,6 +2,13 @@
 
 INSALL_DIR=~/.config/nvim/
 
+if [ -d "$HOME/.local/share/nvim/site/pack/packer" ]; then
+    echo "packer already install."
+else
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+        ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+fi
+
 cp -v ./*.vim ${INSALL_DIR}
 cp -v ./coc-settings.json ${INSALL_DIR}
 cp -v ./cpp_farignore ${INSALL_DIR}
