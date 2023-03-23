@@ -61,6 +61,7 @@
         "g_handleMgr",
         "EResourceAddReason"
     ],
+    "Lua.workspace.checkThirdParty": false,
     "Lua.telemetry.enable": true,
     "tsserver.log": "verbose",
     "sh.enable": true,

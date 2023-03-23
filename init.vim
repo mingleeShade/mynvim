@@ -117,6 +117,7 @@ nnoremap <leader>so :source $MYVIMRC <CR>
 
 function! CopyConfig()
     silent !cp ~/my_config/mynvim/init.vim ~/.config/nvim/
+    silent !cp ~/my_config/mynvim/coc-settings.json ~/.config/nvim/
     silent !cp ~/my_config/mynvim/local.vim ~/.config/nvim/
     silent !cp ~/my_config/mynvim/lua/*.lua ~/.config/nvim/lua/
     :PackerCompile
