@@ -51,10 +51,27 @@ return require('packer').startup(function(use)
         end,
         requires = {
             "MunifTanjim/nui.nvim",
-            --"nvim-lua/plenary.nvim",
+            "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim"
         }
     })
+
+    -- -- telescope 插件
+    -- use({
+    --     "nvim-telescope/telescope.nvim",
+    --     requires = { { "nvim-lua/plenary.nvim" }, { "kdheepak/lazygit.nvim" } },
+    --     config = function()
+    --         require("telescope").load_extension("lazygit")
+    --     end,
+    -- })
+
+    use {
+        'romgrk/barbar.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function ()
+            require('barbar-cfg')
+        end
+    }
 
     -- plenary.nvim 依赖插件
     use {

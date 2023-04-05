@@ -261,6 +261,19 @@ github 仓库：<https://github.com/tree-sitter/tree-sitter>
     sudo ln -sf $HOME/.local/bin/tree-sitter-linux-x64 /usr/bin/tree-sitter
 ```
 
+### lazygit
+
+lazygit 是一个可交互的命令行 git gui 工具，提供 git 界面显示和各种可交互功能
+
+安装方法
+
+```bash
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf lazygit.tar.gz lazygit
+sudo install lazygit /usr/local/bin
+```
+
 ## 健康检查
 
 插件与工具都安装好之后，可以执行`:checkhealth`进行健康检查，并按照提示把问题一一解决
