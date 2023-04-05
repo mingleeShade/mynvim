@@ -172,6 +172,12 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
+" 识别 .example 文件
+augroup my_filetypedetect
+    au! BufNewFile,BufRead *.example setfiletype vim
+augroup END
+
+
 " 快速输入对应的大括号
 inoremap {<CR> {<CR>}<ESC>O
 

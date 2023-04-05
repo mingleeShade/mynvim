@@ -1,6 +1,10 @@
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
+function TestParam (count)
+    print("count: " .. count)
+end
+
 -- Move to previous/next
 map('n', '<Space>,', '<Cmd>BufferPrevious<CR>', opts)
 map('n', '<Space>.', '<Cmd>BufferNext<CR>', opts)
@@ -17,6 +21,26 @@ map('n', '<Space>6', '<Cmd>BufferGoto 6<CR>', opts)
 map('n', '<Space>7', '<Cmd>BufferGoto 7<CR>', opts)
 map('n', '<Space>8', '<Cmd>BufferGoto 8<CR>', opts)
 map('n', '<Space>9', '<Cmd>BufferGoto 9<CR>', opts)
+-- map('n', '<Space>g', '<Cmd>BufferGoto vim.v.count<CR>', opts)
+-- map('n', '<expr> <Space>g', 'BufferGoto ' .. vim.v.count, opts)
+function GotoBuffer()
+    -- print("count=" .. vim.v.count)
+    -- vim.cmd('BufferGoto ' .. vim.v.count)
+    -- print("begin.")
+    -- vim.cmd('sleep 1')
+    local count = vim.v.count
+    local bufnr = vim.fn.bufnr(count)
+    if bufnr == -1 then
+        print("Invalid buffer number: " .. count)
+        return
+    end
+    vim.cmd('BufferGoto ' .. count)
+end
+map('n', '<Space>g', ':lua GotoBuffer()<CR>', opts)
+
+-- map('n', '<Space>g', '<Cmd>lua print("count=" .. vim.v.count .. " | " .. "BufferGoto " .. vim.v.count)<CR>', opts)
+-- map('n', '<Space>g', ':echo "count="<CR>', opts)
+map('n', '<Space>t', '<Cmd>lua TestParam(vim.v.count)<CR>', opts)
 map('n', '<Space>0', '<Cmd>BufferLast<CR>', opts)
 -- Pin/unpin buffer
 map('n', '<Space>bp', '<Cmd>BufferPin<CR>', opts)
