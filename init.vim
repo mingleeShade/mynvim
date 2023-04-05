@@ -955,6 +955,8 @@ noremap <leader>ss :History/<CR>
 " == fzf设置
 let g:fzf_preview_window = ['right,50%,<70(up,40%)', 'ctrl-/']
 let g:fzf_commit_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.9 } }
 
 function! s:list_buffers()
   redir => list
@@ -975,7 +977,6 @@ command! BD call fzf#run(fzf#wrap({
 " 删除Buffer
 noremap <leader>sd :BD<CR>
 
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 
 
 
