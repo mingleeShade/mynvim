@@ -684,7 +684,7 @@ let g:far#source='rgnvim'
 " ===
 " Custom ignore files
 " default is: ['*.tmp', '*.temp']
-let g:any_jump_ignored_files = ['*.tmp', '*.temp', '*.cs', '*.html', '*.xml', '*.i', '*.log', 'doc/*']
+let g:any_jump_ignored_files = ['*.tmp', '*.temp', '*.i', '*.log', 'doc/*']
 
 " 使用 ripgrep 进行搜索有时会有如下报错：
 " E474: Unidentified byte: include/video_font_data.h: PCRE2: error matching: UTF-8 error: isolated byte with 0x80 bit set
@@ -1370,6 +1370,8 @@ let g:coc_global_extensions = [
     \ 'coc-sumneko-lua',
     \ 'coc-toml',
     \ 'coc-tsserver',
+    \ 'coc-css',
+    \ 'coc-html',
     \ 'coc-sh',
     \ 'coc-yank',
     \ 'coc-lists',
