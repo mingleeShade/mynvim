@@ -172,6 +172,12 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
+" 识别 .example 文件
+augroup my_filetypedetect
+    au! BufNewFile,BufRead *.example setfiletype vim
+augroup END
+
+
 " 快速输入对应的大括号
 inoremap {<CR> {<CR>}<ESC>O
 
@@ -369,7 +375,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " buffer 管理插件，标签栏美化
-Plug 'romgrk/barbar.nvim'
+"Plug 'romgrk/barbar.nvim' 转移到 packer 中
 
 " 查看 tag 和符号
 Plug 'liuchengxu/vista.vim'
@@ -449,6 +455,7 @@ Plug 'dhruvasagar/vim-table-mode'
 " Git支持
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+" Plug 'kdheepak/lazygit.nvim' " 底层的文字会透到浮窗上，让显示变得异常
 
 "diffview
 "Plug 'sindrets/diffview.nvim', {'commit': '2d1f45282587d565cc4d84112490bc944c0b491d'}
@@ -508,6 +515,7 @@ nnoremap    <silent>    <leader>to  :FloatermToggle<CR>
 tnoremap    <silent>    <leader>to  <C-\><C-n>:FloatermToggle<CR>
 let g:floaterm_position = 'right'
 let g:floaterm_width = 0.5
+nnoremap <silent> <leader>tg :FloatermNew --height=0.9 --width=0.9 --wintype=float --name=floaterm1 --position=center --autoclose=2 lazygit<CR>
 
 
 
@@ -526,6 +534,14 @@ let g:oscyank_max_length = 1000000
 let g:oscyank_term = 'tmux'  " or 'screen', 'kitty', 'default'
 " By default a confirmation message is echoed after text is copied. This can be disabled with:
 let g:oscyank_silent = v:true  " or 1 for older versions of Vim
+
+
+
+" ===
+" === coc-yank: yank 管理
+" ===
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+
 
 
 " ===
@@ -617,6 +633,28 @@ let g:gitgutter_preview_win_floating = 1
 " let g:gitgutter_sign_modified_removed = ''
 
 
+
+
+" ===
+" === lazygit.nvim: lazygit 的 nvim 插件，提供 git gui 和可交互操作
+" ===
+" let g:lazygit_floating_window_winblend = 0 " transparency of floating window
+" let g:lazygit_floating_window_scaling_factor = 0.9 " scaling factor for floating window
+" let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
+" let g:lazygit_floating_window_use_plenary = 1 " use plenary.nvim to manage floating window if available
+" let g:lazygit_use_neovim_remote = 0 " fallback to 0 if neovim-remote is not installed
+
+" let g:lazygit_use_custom_config_file_path = 0 " config file path is evaluated if this value is 1
+" let g:lazygit_config_file_path = '' " custom config file path
+" nnoremap <silent> <leader>gg :LazyGit<CR>
+
+" autocmd BufEnter * :lua require('lazygit.utils').project_root_dir()
+
+" lua require('telescope').load_extension('lazygit')
+"lua require("telescope").extensions.lazygit.lazygit()
+
+
+
 " ===
 " === diffview
 " ===
@@ -658,7 +696,7 @@ let g:far#source='rgnvim'
 " ===
 " Custom ignore files
 " default is: ['*.tmp', '*.temp']
-let g:any_jump_ignored_files = ['*.tmp', '*.temp', '*.cs', '*.html', '*.xml', '*.i', '*.log', 'doc/*']
+let g:any_jump_ignored_files = ['*.tmp', '*.temp', '*.i', '*.log', 'doc/*']
 
 " 使用 ripgrep 进行搜索有时会有如下报错：
 " E474: Unidentified byte: include/video_font_data.h: PCRE2: error matching: UTF-8 error: isolated byte with 0x80 bit set
@@ -792,30 +830,30 @@ let g:airline_symbols.whitespace = ''
 " === barbar.nvim: buffer 管理 && 标签栏美化
 " ===
 " Move to previous/next
-nnoremap <silent>    <Space>, <Cmd>BufferPrevious<CR>
-nnoremap <silent>    <Space>. <Cmd>BufferNext<CR>
+" nnoremap <silent>    <Space>, <Cmd>BufferPrevious<CR>
+" nnoremap <silent>    <Space>. <Cmd>BufferNext<CR>
 
 " Re-order to previous/next
-nnoremap <silent>    <Space>< <Cmd>BufferMovePrevious<CR>
-nnoremap <silent>    <Space>> <Cmd>BufferMoveNext<CR>
+" nnoremap <silent>    <Space>< <Cmd>BufferMovePrevious<CR>
+" nnoremap <silent>    <Space>> <Cmd>BufferMoveNext<CR>
 
 " Goto buffer in position...
-nnoremap <silent>    <Space>1 <Cmd>BufferGoto 1<CR>
-nnoremap <silent>    <Space>2 <Cmd>BufferGoto 2<CR>
-nnoremap <silent>    <Space>3 <Cmd>BufferGoto 3<CR>
-nnoremap <silent>    <Space>4 <Cmd>BufferGoto 4<CR>
-nnoremap <silent>    <Space>5 <Cmd>BufferGoto 5<CR>
-nnoremap <silent>    <Space>6 <Cmd>BufferGoto 6<CR>
-nnoremap <silent>    <Space>7 <Cmd>BufferGoto 7<CR>
-nnoremap <silent>    <Space>8 <Cmd>BufferGoto 8<CR>
-nnoremap <silent>    <Space>9 <Cmd>BufferGoto 9<CR>
-nnoremap <silent>    <Space>0 <Cmd>BufferLast<CR>
+" nnoremap <silent>    <Space>1 <Cmd>BufferGoto 1<CR>
+" nnoremap <silent>    <Space>2 <Cmd>BufferGoto 2<CR>
+" nnoremap <silent>    <Space>3 <Cmd>BufferGoto 3<CR>
+" nnoremap <silent>    <Space>4 <Cmd>BufferGoto 4<CR>
+" nnoremap <silent>    <Space>5 <Cmd>BufferGoto 5<CR>
+" nnoremap <silent>    <Space>6 <Cmd>BufferGoto 6<CR>
+" nnoremap <silent>    <Space>7 <Cmd>BufferGoto 7<CR>
+" nnoremap <silent>    <Space>8 <Cmd>BufferGoto 8<CR>
+" nnoremap <silent>    <Space>9 <Cmd>BufferGoto 9<CR>
+" nnoremap <silent>    <Space>0 <Cmd>BufferLast<CR>
 
 " Pin/unpin buffer
-nnoremap <silent>    <Space>bp <Cmd>BufferPin<CR>
+" nnoremap <silent>    <Space>bp <Cmd>BufferPin<CR>
 
 " Close buffer
-nnoremap <silent>    <Space>bc <Cmd>BufferClose<CR>
+" nnoremap <silent>    <Space>bc <Cmd>BufferClose<CR>
 
 " Wipeout buffer
 "                          :BufferWipeout
@@ -828,40 +866,40 @@ nnoremap <silent>    <Space>bc <Cmd>BufferClose<CR>
 "                          :BufferCloseBuffersRight
 
 " Magic buffer-picking mode
-nnoremap <silent> <Space>bs   <Cmd>BufferPick<CR>
-nnoremap <silent> <Space>br    <Cmd>BufferPickDelete<CR>
+" nnoremap <silent> <Space>bs   <Cmd>BufferPick<CR>
+" nnoremap <silent> <Space>br    <Cmd>BufferPickDelete<CR>
 
 " Sort automatically by...
-nnoremap <silent> <Space>bn <Cmd>BufferOrderByBufferNumber<CR>
-nnoremap <silent> <Space>bb <Cmd>BufferOrderByDirectory<CR>
-nnoremap <silent> <Space>bl <Cmd>BufferOrderByLanguage<CR>
-nnoremap <silent> <Space>bw <Cmd>BufferOrderByWindowNumber<CR>
+" nnoremap <silent> <Space>bn <Cmd>BufferOrderByBufferNumber<CR>
+" nnoremap <silent> <Space>bb <Cmd>BufferOrderByDirectory<CR>
+" nnoremap <silent> <Space>bl <Cmd>BufferOrderByLanguage<CR>
+" nnoremap <silent> <Space>bw <Cmd>BufferOrderByWindowNumber<CR>
 
 " Other:
 " :BarbarEnable - enables barbar (enabled by default)
 " :BarbarDisable - very bad command, should never be used
 
-let bufferline = get(g:, 'bufferline', {})
+" let bufferline = get(g:, 'bufferline', {})
 
-let bufferline.auto_hide = v:false
+" let bufferline.auto_hide = v:false
 
-let bufferline.clickable = v:true
+" let bufferline.clickable = v:true
 
-let bufferline.icons = 'both'
+" let bufferline.icons = 'both'
 
-let bufferline.icon_pinned = '車'
-let bufferline.icon_close_tab = ''
-let bufferline.icon_separator_active = '▎'
-let bufferline.icon_separator_inactive = '▎'
+" let bufferline.icon_pinned = '車'
+" let bufferline.icon_close_tab = ''
+" let bufferline.icon_separator_active = '▎'
+" let bufferline.icon_separator_inactive = '▎'
 
-" Enables / disables diagnostic symbols
-" ERROR / WARN / INFO / HINT
-let bufferline.diagnostics = [
-  \ {'enabled': v:true, 'icon': 'ﬀ'},
-  \ {'enabled': v:false},
-  \ {'enabled': v:false},
-  \ {'enabled': v:true},
-\]
+" " Enables / disables diagnostic symbols
+" " ERROR / WARN / INFO / HINT
+" let bufferline.diagnostics = [
+"   \ {'enabled': v:true, 'icon': 'ﬀ'},
+"   \ {'enabled': v:false},
+"   \ {'enabled': v:false},
+"   \ {'enabled': v:true},
+" \]
 
 
 
@@ -963,10 +1001,18 @@ noremap <leader>sb :Buffers<CR>
 noremap <leader>st :Tags<CR>
 noremap <leader>sc :History:<CR>
 noremap <leader>ss :History/<CR>
+command! -bang -nargs=* Rgw
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always --smart-case -i  -- '.expand('<cword>'), 1,
+      \   fzf#vim#with_preview(), <bang>0)
+noremap <leader>sw :Rgw<CR>
+
 
 " == fzf设置
 let g:fzf_preview_window = ['right,50%,<70(up,40%)', 'ctrl-/']
 let g:fzf_commit_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.9 } }
 
 function! s:list_buffers()
   redir => list
@@ -987,7 +1033,6 @@ command! BD call fzf#run(fzf#wrap({
 " 删除Buffer
 noremap <leader>sd :BD<CR>
 
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 
 
 
@@ -1183,9 +1228,9 @@ let g:gutentags_auto_add_gtags_cscope = 0
 " === gutentags_plus: use gtags like cscope
 " ===
 " change focus to quickfix window after search (optional).
-let g:gutentags_plus_switch = 1
+" let g:gutentags_plus_switch = 1
 
-let g:gutentags_plus_nomap = 1
+" let g:gutentags_plus_nomap = 1
 " keymap    desc
 " s         Find symbol (reference) under cursor
 " g         Find symbol definition under cursor
@@ -1197,19 +1242,19 @@ let g:gutentags_plus_nomap = 1
 " i         Find files #including the file name under cursor
 " a         Find places where current symbol is assigned
 " z         Find current word in ctags database
-noremap <silent> <leader>gs :GscopeFind s <C-R><C-W><cr>
-noremap <silent> <leader>gg :GscopeFind g <C-R><C-W><cr>
-noremap <silent> <leader>gc :GscopeFind c <C-R><C-W><cr>
-noremap <silent> <leader>gt :GscopeFind t <C-R><C-W><cr>
-noremap <silent> <leader>ge :GscopeFind e <C-R><C-W><cr>
-noremap <silent> <leader>gf :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
-noremap <silent> <leader>gi :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
-noremap <silent> <leader>gd :GscopeFind d <C-R><C-W><cr>
+" noremap <silent> <leader>gs :GscopeFind s <C-R><C-W><cr>
+" noremap <silent> <leader>gg :GscopeFind g <C-R><C-W><cr>
+" noremap <silent> <leader>gc :GscopeFind c <C-R><C-W><cr>
+" noremap <silent> <leader>gt :GscopeFind t <C-R><C-W><cr>
+" noremap <silent> <leader>ge :GscopeFind e <C-R><C-W><cr>
+" noremap <silent> <leader>gf :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
+" noremap <silent> <leader>gi :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
+" noremap <silent> <leader>gd :GscopeFind d <C-R><C-W><cr>
 " \ga 快捷键卡死，原因暂时未知
 " noremap <silent> <leader>ga :GscopeFind a <C-R><C-W><cr>
-noremap <silent> <leader>gz :GscopeFind z <C-R><C-W><cr>
+" noremap <silent> <leader>gz :GscopeFind z <C-R><C-W><cr>
 
-let g:gutentags_define_advanced_commands = 1
+" let g:gutentags_define_advanced_commands = 1
 
 
 " ===
@@ -1337,7 +1382,11 @@ let g:coc_global_extensions = [
     \ 'coc-sumneko-lua',
     \ 'coc-toml',
     \ 'coc-tsserver',
+    \ 'coc-css',
+    \ 'coc-html',
     \ 'coc-sh',
+    \ 'coc-yank',
+    \ 'coc-lists',
     \ 'coc-marketplace'
     \]
 
@@ -1566,6 +1615,41 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+
+
+" ===
+" === coc-lists
+" ===
+" grep word under cursor
+command! -nargs=+ -complete=custom,s:GrepArgs Rrg exe 'CocList grep '.<q-args>
+
+function! s:GrepArgs(...)
+  let list = ['-S', '-smartcase', '-i', '-ignorecase', '-w', '-word',
+        \ '-e', '-regex', '-u', '-skip-vcs-ignores', '-t', '-extension']
+  return join(list, "\n")
+endfunction
+
+" Keymapping for grep word under cursor with interactive mode
+nnoremap <silent> <Leader>cf :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
+
+vnoremap <leader>gv :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
+" 下面这个命令太卡了
+"nnoremap <leader>gs :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
+
+function! s:GrepFromSelected(type)
+  let saved_unnamed_register = @@
+  if a:type ==# 'v'
+    normal! `<v`>y
+  elseif a:type ==# 'char'
+    normal! `[v`]y
+  else
+    return
+  endif
+  let word = substitute(@@, '\n$', '', 'g')
+  let word = escape(word, '| ')
+  let @@ = saved_unnamed_register
+  execute 'CocList grep '.word
+endfunction
 
 
 " ===

@@ -61,6 +61,21 @@
         "g_handleMgr",
         "EResourceAddReason"
     ],
+    "list.source.mru.excludePatterns": [
+        "**/.git/*",
+        "/tmp/*",
+        "**/.svn/*"
+    ],
+    "list.source.grep.excludePatterns": [
+        "**/.git/*",
+        "/tmp/*",
+        "**/.svn/*",
+        ".git/*",
+        ".svn/*"
+    ],
+    "list.source.files.defaultOptions": [
+        "--number-select"
+    ],
     "Lua.workspace.checkThirdParty": false,
     "Lua.telemetry.enable": true,
     "tsserver.log": "verbose",
