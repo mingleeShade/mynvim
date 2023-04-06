@@ -472,6 +472,10 @@ Plug 'voldikss/vim-floaterm'
 Plug 'mingleeShade/vim-log-syntax'
 call plug#end()
 
+" 功能增强
+" rubberduck-chatGPT
+Plug 'gakonst/rubberduck-gpt3.vim'
+
 
 "=== Packer.nvim
 lua require('plugins')
@@ -480,6 +484,14 @@ lua require('plugins')
 
 
 "<=========插件设置==========
+
+
+" ===
+" === rubberduck-gpt3.vim chatGPT 小黄鸭
+" ===
+"按键映射 RunPythonScript 
+nnoremap    <silent>    <leader>dc  :call RunPythonScript()<CR>
+vnoremap    <silent>    <leader>dc  :call RunPythonScript()<CR>
 
 
 " ===
