@@ -501,10 +501,62 @@ nnoremap    <silent>    <leader>tn  :FloatermNext<CR>
 tnoremap    <silent>    <leader>tn  <C-\><C-n>:FloatermNext<CR>
 nnoremap    <silent>    <leader>to  :FloatermToggle<CR>
 tnoremap    <silent>    <leader>to  <C-\><C-n>:FloatermToggle<CR>
-let g:floaterm_position = 'right'
-let g:floaterm_width = 0.5
-nnoremap <silent> <leader>tg :FloatermNew --height=0.9 --width=0.9 --wintype=float --name=floaterm1 --position=center --autoclose=2 lazygit<CR>
+tnoremap    <silent>    <ESC>       <C-\><C-n>:FloatermToggle<CR>
 
+" 打开 lazygit，需要先安装 lazygit
+nnoremap <silent> <leader>tg :FloatermNew --title=lazygit --height=0.9 --width=0.9 --wintype=float --name=floaterm1 --position=center --autoclose=2 lazygit<CR>
+let g:floaterm_position = 'right'
+"let g:floaterm_width = 0.5
+let g:floaterm_opener = 'tabe'
+function! FloatermResize(isplus, rate)
+    if a:isplus == 1
+        let g:floaterm_height = g:floaterm_height + a:rate
+        let g:floaterm_width = g:floaterm_width + a:rate
+    else
+        let g:floaterm_height = g:floaterm_height - a:rate
+        let g:floaterm_width = g:floaterm_width - a:rate
+    endif
+    let g:floaterm_height = (g:floaterm_height > 0.9 ? 0.9 : (g:floaterm_height < 0.1 ? 0.1 : g:floaterm_height))
+    let g:floaterm_width = (g:floaterm_width > 0.9 ? 0.9 : (g:floaterm_width < 0.1 ? 0.1 : g:floaterm_width))
+    " echo printf("h:%.2f, w:%.2f", g:floaterm_height, g:floaterm_width)
+    " let g:floaterm_height = max([0, min([1, g:floaterm_height])])
+    " let g:floaterm_width = max([0, min([1, g:floaterm_width])])
+    :FloatermUpdate --height=g:floaterm_height --width=g:floaterm_width
+endfunction
+tnoremap    <silent>    <C-q>p  <C-\><C-n>:call FloatermResize(1, 0.1)<CR>
+tnoremap    <silent>    <C-q>m  <C-\><C-n>:call FloatermResize(0, 0.1)<CR>
+
+let g:last_position = g:floaterm_position
+function! FloatermMove(position, size)
+    let g:floaterm_position = a:position
+    if a:position == 'left'
+        let g:floaterm_width = 0.5
+        let g:floaterm_height = a:size
+        :FloatermUpdate --wintype=float --height=g:floaterm_height --width=g:floaterm_width --position=left
+    elseif a:position == 'right'
+        let g:floaterm_width = 0.5
+        let g:floaterm_height = a:size
+        :FloatermUpdate --wintype=float --height=g:floaterm_height --width=g:floaterm_width --position=right
+    elseif a:position == 'top'
+        let g:floaterm_height = 0.5
+        let g:floaterm_width = a:size
+        :FloatermUpdate --wintype=float --height=g:floaterm_height --width=g:floaterm_width --position=top
+    elseif a:position == 'bottom'
+        let g:floaterm_height = 0.5
+        let g:floaterm_width = a:size
+        :FloatermUpdate --wintype=float --height=g:floaterm_height --width=g:floaterm_width --position=bottom
+    elseif a:position == 'center'
+        let g:floaterm_height = a:size
+        let g:floaterm_width = a:size
+        :FloatermUpdate --wintype=float --height=g:floaterm_height --width=g:floaterm_width --position=center
+    endif
+endfunction
+
+tnoremap    <silent>    <c-q>h  <C-\><C-n>:call FloatermMove('left', 0.9)<CR>
+tnoremap    <silent>    <c-q>j  <C-\><C-n>:call FloatermMove('bottom', 0.9)<CR>
+tnoremap    <silent>    <c-q>k  <C-\><C-n>:call FloatermMove('top', 0.9)<CR>
+tnoremap    <silent>    <c-q>l  <C-\><C-n>:call FloatermMove('right', 0.9)<CR>
+tnoremap    <silent>    <c-q>c  <C-\><C-n>:call FloatermMove('center', 0.9)<CR>
 
 
 " ===
