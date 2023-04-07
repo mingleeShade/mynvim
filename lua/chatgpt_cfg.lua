@@ -76,7 +76,7 @@ local options = {
     predefined_chat_gpt_prompts = "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv",
 }
 
-vim.api.nvim_set_keymap('n', '<leader>dc', ':ChatGPTEditWithInstructions<CR>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<leader>dc', ':ChatGPTEditWithInstructions<CR>', { noremap = true, silent = true })
 
 function M.setup()
     require("chatgpt").setup(options)
