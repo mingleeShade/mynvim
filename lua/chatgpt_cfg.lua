@@ -60,7 +60,7 @@ local options = {
         n = 1,
     },
     keymaps = {
-        close = { "<C-c>" },
+        close = { "<ESC>" },
         submit = "<C-s>",
         yank_last = "<C-y>",
         yank_last_code = "<C-k>",

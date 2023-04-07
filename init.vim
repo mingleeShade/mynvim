@@ -513,7 +513,53 @@ nnoremap    <silent>    <leader>tn  :FloatermNext<CR>
 tnoremap    <silent>    <leader>tn  <C-\><C-n>:FloatermNext<CR>
 nnoremap    <silent>    <leader>to  :FloatermToggle<CR>
 tnoremap    <silent>    <leader>to  <C-\><C-n>:FloatermToggle<CR>
-tnoremap    <silent>    <ESC>       <C-\><C-n>:FloatermToggle<CR>
+
+
+" 使用 exc 退出各种浮窗
+function! EscExitEveryTerminal()
+    echo 'Enter'
+    let buf_filetype = getwinvar(win_getid(), '&filetype')
+    if buf_filetype == 'floaterm'
+        echo 'Floaterm'
+        :FloatermHide
+    elseif buf_filetype == 'fzf'
+        echo 'ChatGPT'
+    endif
+endfunction
+"tnoremap    <silent>    <ESC>       <C-\><C-n>:call EscExitEveryTerminal()<CR>
+autocmd FileType floaterm tnoremap <silent> <buffer> <ESC> <C-\><C-n>:FloatermHide <CR>
+" autocmd WinEnter * if win_gettype(win_getid()) is 'popup' | echo 'sla' | inoremap <silent><buffer> <ESC> <C-\><C-o>:call EscExitEveryTerminal()<CR> | endif
+" autocmd WinEnter * if win_gettype(win_getid()) is 'popup' | nnoremap <silent><buffer> <ESC> :call EscExitEveryTerminal()<CR> | endif
+" autocmd FileType chatgpt  nnoremap <silent><buffer> <ESC> :call EscExitEveryTerminal()<CR>
+" autocmd FileType chatgpt  inoremap <silent><buffer> <ESC> <C-\><C-o>:call EscExitEveryTerminal()<CR>
+
+function! PrintCurWininfo()
+    let bufnr = winbufnr(win_getid())
+    echomsg 'Buffname: ' . bufname(bufnr)
+    echomsg 'FileType: ' . &filetype
+    echomsg 'Float: ' . win_gettype(win_getid())
+endfunction
+
+function! PrintWininfo()
+  let wininfo = getwininfo()
+  for info in wininfo
+    echomsg 'Window ID: ' . info.winid
+    echomsg 'Window Number: ' . info.winnr
+    echomsg 'Window Type: ' . (info.quickfix ? 'Quickfix' : (info.loclist ? 'Location List' : 'Normal'))
+    let bufnr = winbufnr(info.winid)
+    echomsg 'Buffname name: ' . bufname(bufnr)
+    echomsg 'Filetype: ' . getwinvar(info.winid, '&filetype')
+    echomsg 'IsTerminal: ' . info.terminal
+    "win_getid()
+    echomsg 'Float: ' . win_gettype(info.winid)
+    " echomsg 'Window Name: ' . (info.tabpage > 0 ? tabpagename(info.tabpage) . ' ' : '') . info.winname
+    echomsg '---'
+  endfor
+endfunction
+
+" tnoremap <silent> ttt <C-\><C-n>:call PrintWininfo()<CR>
+" nnoremap <silent> ttt :call PrintWininfo()<CR>
+
 
 " 打开 lazygit，需要先安装 lazygit
 nnoremap <silent> <leader>tg :FloatermNew --title=lazygit --height=0.9 --width=0.9 --wintype=float --name=floaterm1 --position=center --autoclose=2 lazygit<CR>
