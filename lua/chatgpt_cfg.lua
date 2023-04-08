@@ -1,5 +1,9 @@
 local M = {}
 
+-- 设置快捷键
+local map = vim.api.nvim_set_keymap
+map('n', '<leader>cg', '<Cmd>ChatGPT<CR>', {noremap = true, silent = true})
+
 local options = {
     welcome_message = WELCOME_MESSAGE,
     loading_text = "loading",
