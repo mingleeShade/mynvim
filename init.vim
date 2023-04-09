@@ -1026,7 +1026,8 @@ let g:rnvimr_pick_enable = 1
 "let g:rnvimr_draw_border = 0
 "let g:rnvimr_bw_enable = 1
 highlight link RnvimrNormal CursorLine
-nnoremap <silent><leader>r :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
+nnoremap <silent><leader>r :RnvimrToggle<CR>
+" tnoremap <silent><> <C-\><C-n>:RnvimrResize 0<CR>
 let g:rnvimr_action = {
             \ '<C-t>': 'NvimEdit tabedit',
             \ '<C-x>': 'NvimEdit split',
@@ -1040,7 +1041,7 @@ let g:rnvimr_layout = { 'relative': 'editor',
             \ 'col': 0,
             \ 'row': 0,
             \ 'style': 'minimal' }
-"let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
+let g:rnvimr_presets = [{'width': 0.9, 'height': 0.9}]
 
 
 " ===
