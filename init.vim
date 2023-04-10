@@ -496,7 +496,7 @@ lua require('plugins')
 " ===
 " === rubberduck-gpt3.vim chatGPT 小黄鸭
 " ===
-"按键映射 RunPythonScript 
+"按键映射 RunPythonScript
 nnoremap    <silent>    <leader>dc  :call RunPythonScript()<CR>
 vnoremap    <silent>    <leader>dc  :call RunPythonScript()<CR>
 
@@ -1098,6 +1098,7 @@ noremap <leader>sr :Rg<CR>
 noremap <leader>sh :History<CR>
 noremap <leader>sb :Buffers<CR>
 noremap <leader>st :Tags<CR>
+noremap <leader>sm :History<CR>
 noremap <leader>sc :History:<CR>
 noremap <leader>ss :History/<CR>
 command! -bang -nargs=* Rgw
@@ -1112,6 +1113,7 @@ let g:fzf_preview_window = ['right,50%,<70(up,40%)', 'ctrl-/']
 let g:fzf_commit_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.9 } }
+
 
 function! s:list_buffers()
   redir => list
@@ -1132,6 +1134,19 @@ command! BD call fzf#run(fzf#wrap({
 " 删除Buffer
 noremap <leader>sd :BD<CR>
 
+" 显示按键映射
+nnoremap <leader><tab> <plug>(fzf-maps-n)
+xnoremap <leader><tab> <plug>(fzf-maps-x)
+onoremap <leader><tab> <plug>(fzf-maps-o)
+inoremap <leader><tab> <plug>(fzf-maps-i)
+
+" == 补全相关
+" Path completion with custom source command
+" inoremap <expr> <c-a><c-f> fzf#vim#complete#path('fd')
+inoremap <expr> <c-a><c-f> fzf#vim#complete#path('rg --files')
+
+" Word completion with custom spec with popup layout option
+inoremap <expr> <c-a><c-k> fzf#vim#complete#word({'window': { 'width': 0.2, 'height': 0.9, 'xoffset': 1 }})
 
 
 
@@ -1169,7 +1184,7 @@ map <F6> :NERDTree<CR>
 " === vista.vim 不支持原始的 Exuberant Ctags,
 " 如果 g:vista_default_executive 设置为 'ctags', 则需要先安装 Universal-ctags(https://github.com/universal-ctags/ctags) 方可使用
 noremap <leader>v :Vista!!<CR>
-noremap tc :silent! Vista finder coc<CR>
+" noremap tc :silent! Vista finder coc<CR>
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 let g:vista_default_executive = 'coc'
 let g:vista_fzf_preview = ['right:50%']
