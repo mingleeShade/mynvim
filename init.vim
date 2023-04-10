@@ -1101,11 +1101,25 @@ noremap <leader>st :Tags<CR>
 noremap <leader>sm :History<CR>
 noremap <leader>sc :History:<CR>
 noremap <leader>ss :History/<CR>
+
+" 查询光标所在词
 command! -bang -nargs=* Rgw
       \ call fzf#vim#grep(
       \   'rg --column --line-number --no-heading --color=always --smart-case -i  -- '.expand('<cword>'), 1,
       \   fzf#vim#with_preview(), <bang>0)
 noremap <leader>sw :Rgw<CR>
+
+" 高级 RG
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--disabled', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  let spec = fzf#vim#with_preview(spec, 'right', 'ctrl-/')
+  call fzf#vim#grep(initial_command, 1, spec, a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 
 " == fzf设置

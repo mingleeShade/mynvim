@@ -274,6 +274,35 @@ tar xf lazygit.tar.gz lazygit
 sudo install lazygit /usr/local/bin
 ```
 
+### delta
+
+delta(git-delta) 为 `git`、`diff`、`grep` 的输出提供语法高亮页面。
+
+安装方案
+
+```bash
+# Debian8
+wget https://github.com/dandavison/delta/releases/download/0.15.1/git-delta-musl_0.15.1_amd64.deb
+sudo dpkg -i git-delta-musl_0.15.1_amd64.deb
+
+# 查看是否安装成功
+delta --version
+
+```
+
+配置
+
+``` bash
+# 配置 delta
+mv .gitconfig ~/
+```
+
+相关链接
+
+- 主页：<https://dandavison.github.io/delta/introduction.html>
+- 老版本 Debian 安装问题（安装 `musl` 版本）：<https://github.com/dandavison/delta/issues/504>
+- 下载列表：<https://github.com/dandavison/delta/releases>
+
 ## 健康检查
 
 插件与工具都安装好之后，可以执行`:checkhealth`进行健康检查，并按照提示把问题一一解决
