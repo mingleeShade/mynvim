@@ -1524,6 +1524,9 @@ let g:coc_status_error_sign = ''
 "let g:coc_status_warning_sign = ''
 let g:coc_status_warning_sign = ''
 
+" 支持 json 文件注释
+autocmd FileType json syntax match Comment +\/\/.\+$+
+
 set hidden
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
