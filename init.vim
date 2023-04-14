@@ -486,6 +486,7 @@ Plug 'gakonst/rubberduck-gpt3.vim'
 
 "=== Packer.nvim
 lua require('plugins')
+lua require('nvim-treesitter-cfg')
 
 "==========插件安装=========>
 
