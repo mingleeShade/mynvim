@@ -179,6 +179,36 @@ sudo make prefix=/usr/local install
 - plenary.nvim
 - nvim-web-devicons (optional) For file icons
 
+
+### git-delta
+
+delta(git-delta) 为 `git`、`diff`、`grep` 的输出提供语法高亮页面。
+
+安装方案
+
+```bash
+# Debian8
+wget https://github.com/dandavison/delta/releases/download/0.15.1/git-delta-musl_0.15.1_amd64.deb
+sudo dpkg -i git-delta-musl_0.15.1_amd64.deb
+
+# 查看是否安装成功
+delta --version
+
+```
+
+配置
+
+``` bash
+# 配置 delta
+mv .gitconfig ~/
+```
+
+相关链接
+
+- 主页：<https://dandavison.github.io/delta/introduction.html>
+- 老版本 Debian 安装问题（安装 `musl` 版本）：<https://github.com/dandavison/delta/issues/504>
+- 下载列表：<https://github.com/dandavison/delta/releases>
+
 ## ChatGPT
 
 ### ChatGPT.nvim
@@ -188,6 +218,32 @@ sudo make prefix=/usr/local install
 ### curl
 
 依赖高版本的 curl，安装 curl 方法：<https://flowus.cn/4263e38e-57db-4924-ae13-910011a49ba4>
+
+## 格式化
+
+这里主要使用 `mhartington/formatter.nvim` 来做格式化
+
+### clang-format for cpp
+
+```bash
+
+```
+
+### stylua for lua
+
+```bash
+wget https://github.com/JohnnyMorganz/StyLua/releases/download/v0.10.1/stylua-0.10.1-linux.zip
+unzip stylua-0.10.1-linux.zip
+chmod +x stylua
+mv stylua ~/.local/bin/
+sudo ln -sf $HOME/.local/bin/stylua /usr/bin/stylua
+```
+
+### tidy for html
+
+```bash
+
+```
 
 ## 其他外部工具安装
 
@@ -273,35 +329,6 @@ curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/lates
 tar xf lazygit.tar.gz lazygit
 sudo install lazygit /usr/local/bin
 ```
-
-### delta
-
-delta(git-delta) 为 `git`、`diff`、`grep` 的输出提供语法高亮页面。
-
-安装方案
-
-```bash
-# Debian8
-wget https://github.com/dandavison/delta/releases/download/0.15.1/git-delta-musl_0.15.1_amd64.deb
-sudo dpkg -i git-delta-musl_0.15.1_amd64.deb
-
-# 查看是否安装成功
-delta --version
-
-```
-
-配置
-
-``` bash
-# 配置 delta
-mv .gitconfig ~/
-```
-
-相关链接
-
-- 主页：<https://dandavison.github.io/delta/introduction.html>
-- 老版本 Debian 安装问题（安装 `musl` 版本）：<https://github.com/dandavison/delta/issues/504>
-- 下载列表：<https://github.com/dandavison/delta/releases>
 
 ## 健康检查
 

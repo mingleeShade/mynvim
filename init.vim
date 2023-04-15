@@ -173,9 +173,9 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 " 识别 .example 文件
-augroup my_filetypedetect
-    au! BufNewFile,BufRead *.example setfiletype vim
-augroup END
+" augroup my_filetypedetect
+"     au! BufNewFile,BufRead *.example setfiletype vim
+" augroup END
 
 
 " 快速输入对应的大括号
@@ -391,7 +391,7 @@ Plug 'skywind3000/vim-preview'
 Plug 'mingleeShade/quickr-preview.vim'
 
 " 代码格式化
-"Plug 'mhartington/formatter.nvim'
+"Plug 'mhartington/formatter.nvim' " 使用 packer 安装
 Plug 'vim-autoformat/vim-autoformat'
 
 " 缩进对齐线
@@ -1489,6 +1489,17 @@ if filereadable('.astylerc')
     let g:formaters_c = ['astyle']
     autocmd BufWritePre *.cpp,*.h,*.c,*.hpp :Autoformat
 endif
+
+
+
+" ===
+" === formatter.nvim
+" ===
+augroup FormatAutogroup
+    autocmd!
+    autocmd BufWritePost * FormatWrite
+augroup END
+
 
 
 " ===

@@ -56,6 +56,14 @@ return require('packer').startup(function(use)
         }
     })
 
+    -- formatter.nvim
+    use {
+        'mhartington/formatter.nvim',
+        config = function()
+            require("formatter-cfg")
+        end
+    }
+
     -- -- telescope 插件
     -- use({
     --     "nvim-telescope/telescope.nvim",
