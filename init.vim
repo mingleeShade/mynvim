@@ -486,6 +486,7 @@ Plug 'gakonst/rubberduck-gpt3.vim'
 
 "=== Packer.nvim
 lua require('plugins')
+lua require('nvim-treesitter-cfg')
 
 "==========插件安装=========>
 
@@ -1534,6 +1535,9 @@ let g:coc_global_extensions = [
 let g:coc_status_error_sign = ''
 "let g:coc_status_warning_sign = ''
 let g:coc_status_warning_sign = ''
+
+" 支持 json 文件注释
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
 set hidden
 
