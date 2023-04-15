@@ -6,14 +6,14 @@ NVIM 配置
 
 ### 命令行安装
 
-``` bash
+```bash
 sudo apt-get install neovim
 ```
 
 ### 源码安装
 
-- 安装指引："https://github.com/neovim/neovim/wiki/Building-Neovim"
-- 安装前置软件，具体参看："https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites"
+- 安装指引：<https://github.com/neovim/neovim/wiki/Building-Neovim>
+- 安装前置软件，具体参看：<https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites>
 - 命令汇总如下
 
 ```bash
@@ -52,15 +52,15 @@ packer 用来管理 lua 插件
 
 ## coc.vim
 
-coc 支持 lsp，是个强大的补全工具，同时也是一个插件管理工具，可以通过coc安装插件。
+coc 支持 lsp，是个强大的补全工具，同时也是一个插件管理工具，可以通过 coc 安装插件。
 
-coc 源码地址："https://github.com/neoclide/coc.nvim"
+coc 源码地址：<https://github.com/neoclide/coc.nvim>
 
 要使 coc 正常工作首先需要安装 12.12 以上的 nodejs。
 
 ### nodjs 安装
 
-安装指引："https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions"
+安装指引：<https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions>
 
 ```bash
 # debian 安装方案
@@ -78,34 +78,38 @@ coc-clangd 是 c++ 补全插件，还有一个插件是 coc-ccls，两者选其�
 
 ### 安装 ctags/gtags 和 cscope
 
+【已弃用】使用 coc-clangd、anyjump、fzf 之后，感觉花费大量时间和性能来生产 tag 已经没有必要了
+
 ctags 安装不多说明，可以使用`apt-get install ctags`直接安装原生 ctags 或者安装 universal-ctags。
 
-gtags 是比ctags更好的标签生成器
+gtags 是比 ctags 更好的标签生成器
 
-- 相关攻略："https://zhuanlan.zhihu.com/p/36279445"
-- 官方文档："https://www.gnu.org/software/global/global.html"
-- 下载地址："https://ftp.gnu.org/pub/gnu/global/global-6.6.tar.gz"
+- 相关攻略：<https://zhuanlan.zhihu.com/p/36279445>
+- 官方文档：<https://www.gnu.org/software/global/global.html>
+- 下载地址：<https://ftp.gnu.org/pub/gnu/global/global-6.6.tar.gz>
 - 安装方式：源码安装，需要先安装 pygments (`sudo pip install pygments`)
 
 cscope 也可以通过命令直接安装
 
 ### bear
 
+【已弃用】 可以使用 `compiler_flags.txt` 文件来配置 clangd 的编译选项
+
 bear 是一个为 clang 生成编译数据库的工具。
 
 安装方式:
 
 - 命令行安装：`sudo apt-get install bear`
-- 源码安装: 源码地址为 "https://github.com/rizsotto/Bear"
+- 源码安装: 源码地址为 <https://github.com/rizsotto/Bear>
 
-使用方式：在 make 命令前加 bear，如`bear make -j4`，即可生成 compile_commands.json。
+使用方式：在 make 命令前加 bear，如`bear make -j4`，即可生成 `compile_commands.json`。
 
-生成的 compile_commands.json 是 coc-clangd 补全和跳转的依据。
-compile_commands.json 的生成方式可以参考："https://clangd.llvm.org/installation.html#project-setup"
+生成的 `compile_commands.json` 是 coc-clangd 补全和跳转的依据。
+`compile_commands.json` 的生成方式可以参考：<https://clangd.llvm.org/installation.html#project-setup>
 
 ### jq
 
-用于合并两个 json 文件，如 compile_commands.json。
+用于合并两个 json 文件，如 `compile_commands.json`。
 
 安装方式：`sudo apt-get install jq`
 
@@ -138,7 +142,7 @@ gopls 是 Golang 团队自行开发的 language server，可以通过 go 安装`
 
 - 安装依赖
 
-``` shell
+```shell
 sudo apt update
 sudo apt install make libssl-dev libghc-zlib-dev libcurl4-gnutls-dev \
          libexpat1-dev gettext unzip
@@ -146,13 +150,13 @@ sudo apt install make libssl-dev libghc-zlib-dev libcurl4-gnutls-dev \
 
 - 源码下载
 
-``` shell
+```shell
 git clone https://github.com/git/git
 ```
 
 - 编译安装
 
-``` shell
+```shell
 # 先切换 tag
 cd git
 # 展示所有的版本 tag
@@ -179,7 +183,6 @@ sudo make prefix=/usr/local install
 - plenary.nvim
 - nvim-web-devicons (optional) For file icons
 
-
 ### git-delta
 
 delta(git-delta) 为 `git`、`diff`、`grep` 的输出提供语法高亮页面。
@@ -198,7 +201,7 @@ delta --version
 
 配置
 
-``` bash
+```bash
 # 配置 delta
 mv .gitconfig ~/
 ```
@@ -223,10 +226,33 @@ mv .gitconfig ~/
 
 这里主要使用 `mhartington/formatter.nvim` 来做格式化
 
+### astype for cpp
+
+```bash
+# astyle
+svn co https://svn.code.sf.net/p/astyle/code/trunk/AStyle
+cd AStyle
+mkdir as-gcc-exe
+cd as-gcc-exe
+cmake ../
+make
+sudo make install
+```
+
+### prettier for html/css/js/ts/markdown/json and so on
+
+```bash
+sudo npm install -g --save-dev --save-exact prettier
+```
+
 ### clang-format for cpp
 
 ```bash
+# 这里会安装到 $HOME/.local/bin，需要将该路径加入环境变量 PATH 中
+pip install clang-format
 
+# 安装到系统路径
+sudo pip install clang-format
 ```
 
 ### stylua for lua
@@ -237,12 +263,6 @@ unzip stylua-0.10.1-linux.zip
 chmod +x stylua
 mv stylua ~/.local/bin/
 sudo ln -sf $HOME/.local/bin/stylua /usr/bin/stylua
-```
-
-### tidy for html
-
-```bash
-
 ```
 
 ## 其他外部工具安装
@@ -294,10 +314,10 @@ ripgrep 是非常快速的模糊查找字符串工具，效率是普通工具的
 
 - debian 用户可以直接下载 .deb 安装
 
-    ```bash
-    curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
-    sudo dpkg -i ripgrep_13.0.0_amd64.deb
-    ```
+  ```bash
+  curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
+  sudo dpkg -i ripgrep_13.0.0_amd64.deb
+  ```
 
 - debian 10(buster) 用用户可以直接使用命令`sudo apt-get install ripgrep`进行安装。
 - 如果使用源码安装的方式，需要先安装 Rust("https://www.rust-lang.org/")。
@@ -341,12 +361,13 @@ sudo install lazygit /usr/local/bin
 - 显示运行日志：`:messages`
 - 命令信息转存到文件之中：
 
-    ```vimscript
-    :redir > finename.txt
-    :youcmd
-    ```
+  ```vimscript
+  :redir > finename.txt
+  :youcmd
+  ```
 
-    使用`help redir`查看更多帮助信息
+  使用`help redir`查看更多帮助信息
+
 - 打开 Coc 日志：`:CocInfo`
 - 打开 Coc 插件的日志输出：先输入指令`:CocCommand workspace.showOutput`，然后选择想要打开的日志文件
 
@@ -383,43 +404,43 @@ to server.`， `:CocCommand workspace.showOutput sh` 显示：
 
 1. 安装 nvm
 
-    ```bash
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-    ```
+   ```bash
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+   ```
 
 2. 重启终端或加载 nvm
 
-    安装完成后，需要重启终端或者使用以下命令加载 nvm：
+   安装完成后，需要重启终端或者使用以下命令加载 nvm：
 
-    ```bash
-    source ~/.bashrc
-    ```
+   ```bash
+   source ~/.bashrc
+   ```
 
 3. 安装 Node.js
 
-    使用以下命令安装 Node.js：
+   使用以下命令安装 Node.js：
 
-    ```bash
-    nvm install <version>
-    ```
+   ```bash
+   nvm install <version>
+   ```
 
-    其中 `<version>` 是你想要安装的 Node.js 版本号，例如 `14.17.0`。
+   其中 `<version>` 是你想要安装的 Node.js 版本号，例如 `14.17.0`。
 
 4. 切换到新安装的 Node.js 版本
 
-    使用以下命令切换到新安装的 Node.js 版本：
+   使用以下命令切换到新安装的 Node.js 版本：
 
-    ```bash
-    nvm use <version>
-    ```
+   ```bash
+   nvm use <version>
+   ```
 
 ## 其他
 
 ### 字体问题
 
-- nerdfonts字体下载："https://www.nerdfonts.com/font-downloads"
+- nerdfonts 字体下载："https://www.nerdfonts.com/font-downloads"
 - 建议采用字体: `Consolas Nerd Font Complete Mono`, github 仓库: "https://github.com/zdszero/Consolas-with-Yahei-Nerd-Font"
 - 可以通过 `字符映射表` 来选择某个字符
 - 其他中文字体
-    -- 图标较少但字宽OK："https://github.com/mingleeShade/YaHei-Consolas-Hybrid-For-Powerline"
-    -- 图标齐全，但字宽显示有问题："https://github.com/mingleeShade/yahei-fira-icon-hybrid-font"
+  -- 图标较少但字宽 OK："https://github.com/mingleeShade/YaHei-Consolas-Hybrid-For-Powerline"
+  -- 图标齐全，但字宽显示有问题："https://github.com/mingleeShade/yahei-fira-icon-hybrid-font"

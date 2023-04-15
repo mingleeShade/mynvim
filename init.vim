@@ -392,7 +392,7 @@ Plug 'mingleeShade/quickr-preview.vim'
 
 " 代码格式化
 "Plug 'mhartington/formatter.nvim' " 使用 packer 安装
-Plug 'vim-autoformat/vim-autoformat'
+" Plug 'vim-autoformat/vim-autoformat' 使用 formatter.nvim 取代
 
 " 缩进对齐线
 "Plug 'nathanaelkane/vim-indent-guides'
@@ -487,6 +487,7 @@ Plug 'gakonst/rubberduck-gpt3.vim'
 "=== Packer.nvim
 lua require('plugins')
 lua require('nvim-treesitter-cfg')
+lua require('formatter-cfg')
 
 "==========插件安装=========>
 
@@ -1482,14 +1483,14 @@ let g:indentLine_conceallevel = 1
 " ===
 " === vim-autoformat：代码格式化
 " ===
-if filereadable('.astylerc')
-    " 如果工程目录下存在 .astylerc 文件，则启用 astyle 格式化
-    " 需要先安装 astyle 工具
-    let g:formatdef_astyle = '"astyle --options=.astylerc"'
-    let g:formaters_cpp = ['astyle']
-    let g:formaters_c = ['astyle']
-    autocmd BufWritePre *.cpp,*.h,*.c,*.hpp :Autoformat
-endif
+" if filereadable('.astylerc')
+"     " 如果工程目录下存在 .astylerc 文件，则启用 astyle 格式化
+"     " 需要先安装 astyle 工具
+"     let g:formatdef_astyle = '"astyle --options=.astylerc"'
+"     let g:formaters_cpp = ['astyle']
+"     let g:formaters_c = ['astyle']
+"     autocmd BufWritePre *.cpp,*.h,*.c,*.hpp :Autoformat
+" endif
 
 
 
