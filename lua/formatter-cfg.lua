@@ -59,6 +59,7 @@ require("formatter").setup({
                         args = {
                             "--options=.astylerc",
                         },
+                        stdin = true,
                     }
                 elseif vim.fn.filereadable(".clang-format") == 1 then
                     -- print("use clang-format")
@@ -78,6 +79,7 @@ require("formatter").setup({
                         args = {
                             "--options=$HOME/.config/nvim/.astylerc",
                         },
+                        stdin = true,
                     }
                 end
             end,
