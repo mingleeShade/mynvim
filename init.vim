@@ -1509,6 +1509,7 @@ let g:coc_global_extensions = [
     \ 'coc-markdownlint',
     \ 'coc-sumneko-lua',
     \ 'coc-toml',
+    \ 'coc-go',
     \ 'coc-tsserver',
     \ 'coc-css',
     \ 'coc-html',
