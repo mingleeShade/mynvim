@@ -128,6 +128,21 @@ gopls 是 Golang 团队自行开发的 language server，可以通过 go 安装`
 
 > 注意：gopls 需要 go1.12 以上版本。
 
+### 也可以使用 coc-go 插件
+
+用 coc-go 插件来托管 gopls 插件，更加方便
+
+### go 环境安装
+
+```bash
+wget https://go.dev/dl/go1.20.3.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf go1.20.3.linux-amd64.tar.gz
+
+# 修改环境变量，建议写进 ~/.zshrc 或者 ~/.bashrc 之中
+export PATH=$PATH:/usr/local/go/bin
+```
+
 ## Git 支持
 
 ### diffview
@@ -438,9 +453,9 @@ to server.`， `:CocCommand workspace.showOutput sh` 显示：
 
 ### 字体问题
 
-- nerdfonts 字体下载："https://www.nerdfonts.com/font-downloads"
-- 建议采用字体: `Consolas Nerd Font Complete Mono`, github 仓库: "https://github.com/zdszero/Consolas-with-Yahei-Nerd-Font"
+- nerdfonts 字体下载：<https://www.nerdfonts.com/font-downloads>
+- 建议采用字体: `Consolas Nerd Font Complete Mono`, github 仓库: <https://github.com/zdszero/Consolas-with-Yahei-Nerd-Font>
 - 可以通过 `字符映射表` 来选择某个字符
 - 其他中文字体
-  -- 图标较少但字宽 OK："https://github.com/mingleeShade/YaHei-Consolas-Hybrid-For-Powerline"
-  -- 图标齐全，但字宽显示有问题："https://github.com/mingleeShade/yahei-fira-icon-hybrid-font"
+  -- 图标较少但字宽 OK：<https://github.com/mingleeShade/YaHei-Consolas-Hybrid-For-Powerline>
+  -- 图标齐全，但字宽显示有问题：<https://github.com/mingleeShade/yahei-fira-icon-hybrid-font>

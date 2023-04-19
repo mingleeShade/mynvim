@@ -33,21 +33,21 @@
     //"clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd",
     "clangd.disableSnippetCompletion": false,
     "languageserver": {
-        "golang": {
-            "command": "gopls",
-            "rootPatterns": [
-                "go.mod",
-                ".vim/",
-                ".git/",
-                ".hg/"
-            ],
-            "filetypes": [
-                "go"
-            ],
-            "initializationOptions": {
-                "usePlaceholders": true
-            }
-        }
+        // "golang": {
+        //     "command": "gopls",
+        //     "rootPatterns": [
+        //         "go.mod",
+        //         ".vim/",
+        //         ".git/",
+        //         ".hg/"
+        //     ],
+        //     "filetypes": [
+        //         "go"
+        //     ],
+        //     "initializationOptions": {
+        //         "usePlaceholders": true
+        //     }
+        // }
     },
     "Lua.runtime.version": "Lua 5.2",
     "Lua.diagnostics.globals": [
