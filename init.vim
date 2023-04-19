@@ -1898,3 +1898,14 @@ function! DebugScroll()
 endfunction
 
 "inoremap <silent> <leader>qd <c-\><c-o>:call DebugScroll()<CR>
+
+
+"======= 统一更新函数 =======
+function! AllPlugUpdate()
+    :PlugClean
+    :PlugInstall
+    :CocUpdate
+    :PackerClean
+    :PackerSync
+endfunction
+command! AllPlugUpdate :call AllPlugUpdate()<CR>
