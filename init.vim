@@ -6,6 +6,11 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" 这三行用来调试 启动时的 耗时
+" :profile start cost_time.log
+" :profile func *
+" :profile file *
+
 "<=========基础设置==========
 
 "----------缩进相关----------
@@ -34,6 +39,9 @@ set cino+=g0
 
 " 语法高亮
 syntax on
+autocmd BufEnter * :syn sync maxlines=500
+set synmaxcol=200
+set nocursorline
 "----------颜色主题----------
 
 "----------其他----------
@@ -164,13 +172,13 @@ hi ModeMsg ctermfg=DarkGreen
 hi PmenuSel ctermbg=green ctermfg=white
 
 " 高亮多余的空格
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd VimEnter * match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+" highlight ExtraWhitespace ctermbg=red guibg=red
+" match ExtraWhitespace /\s\+$/
+" autocmd VimEnter * match ExtraWhitespace /\s\+$/
+" autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+" autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+" autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+" autocmd BufWinLeave * call clearmatches()
 
 " 识别 .example 文件
 " augroup my_filetypedetect
@@ -309,6 +317,18 @@ set foldmethod=manual
 hi Folded guibg=black guifg=grey40 ctermfg=grey ctermbg=darkgrey
 hi FoldColumn guibg=black guifg=grey20 ctermfg=4 ctermbg=7
 
+" if getfsize(expand('%')) >= 1024*1024
+"     " 太大的文件设置不折叠
+"     set nofoldenable
+" else
+"     augroup myfold
+"         autocmd!
+"         autocmd FileType c,cpp,go,python,sh,javascript,html,css,xml,vim setlocal foldmethod=expr
+"         autocmd FileType c,cpp,go,python,sh,javascript,html,css,xml,vim setlocal foldexpr=nvim_treesitter#foldexpr()
+"         autocmd FileType c,cpp,go,python,sh,javascript,html,css,xml,vim setlocal foldlevel=99
+"     augroup END
+" endif
+
 " 打通系统粘贴板与neovim粘贴板
 " 参考帖子：https://zhuanlan.zhihu.com/p/419472307
 " 之前放进来之后，有报错，但是后来突然好了，非常莫名
@@ -434,6 +454,7 @@ Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 
 " 查找关键字和批量替换
 Plug 'brooth/far.vim'
+Plug 'wincent/ferret'
 
 " 全局查找定义和引用, fork 自 pechorin/any-jump.vim
 Plug 'mingleeShade/any-jump.vim'
@@ -477,12 +498,15 @@ Plug 'voldikss/vim-floaterm'
 " 日志文件高亮
 "Plug 'mtdl9/vim-log-highlighting'
 Plug 'mingleeShade/vim-log-syntax'
-call plug#end()
 
-" 功能增强
+" AI
 " rubberduck-chatGPT
 Plug 'gakonst/rubberduck-gpt3.vim'
 
+" 异步支持
+Plug 'skywind3000/asyncrun.vim'
+
+call plug#end()
 
 "=== Packer.nvim
 lua require('plugins')
@@ -493,6 +517,12 @@ lua require('formatter-cfg')
 
 
 "<=========插件设置==========
+
+
+" ===
+" === asyncrun.vim
+" ===
+let g:asyncrun_open=6
 
 
 " ===
@@ -1406,6 +1436,8 @@ function ExitQuickfix()
     :cclose
 endfunction
 autocmd FileType qf nnoremap <silent><buffer> <Esc> :call ExitQuickfix()<cr>
+noremap <silent> <leader>qq :call ExitQuickfix()<cr>
+inoremap <silent> <leader>qq <c-\><c-o>:call ExitQuickfix()<cr>
 
 " 预览标签
 " 为了能在命令行预览标签，首先需要关闭 在命令行中显示模式
@@ -1424,9 +1456,9 @@ inoremap <F4> <c-\><c-o>:PreviewSignature!<cr>
 " === quickr-preview.vim
 " ===
 " Auto-open preview window
-let g:quickr_preview_on_cursor = 1
+" let g:quickr_preview_on_cursor = 1
 " Auto-close quickfix on enter
-let g:quickr_preview_exit_on_enter = 1
+" let g:quickr_preview_exit_on_enter = 1
 
 " 配合 quickr-preview 实现悬浮 preview
 function! s:pedit()
