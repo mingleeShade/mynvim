@@ -478,10 +478,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 " Plug 'kdheepak/lazygit.nvim' " 底层的文字会透到浮窗上，让显示变得异常
 
-"diffview
+"diffview 使用 packer 安装的 lua 版
 "Plug 'sindrets/diffview.nvim', {'commit': '2d1f45282587d565cc4d84112490bc944c0b491d'}
-" 使用 fork 出来的
-Plug 'mingleeShade/diffview.nvim'
 
 " 文本对齐插件
 Plug 'junegunn/vim-easy-align'
