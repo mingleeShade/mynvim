@@ -1624,10 +1624,10 @@ endif
 " nmap <silent> gr <Plug>(coc-references)
 
 " 函数跳转快捷键 自行封装接口
-nmap <silent> gd :call <SID>CocJumpAndSetTagStack(0) <CR>
-nmap <silent> gy :call <SID>CocJumpAndSetTagStack(1) <CR>
-nmap <silent> gi :call <SID>CocJumpAndSetTagStack(2) <CR>
-nmap <silent> gr :call <SID>CocJumpAndSetTagStack(3) <CR>
+nmap <silent> gd :call <SID>CocJumpAndSetTagStack('jumpDefinition') <CR>
+nmap <silent> gy :call <SID>CocJumpAndSetTagStack('jumpTypeDefinition') <CR>
+nmap <silent> gi :call <SID>CocJumpAndSetTagStack('jumpImplementation') <CR>
+nmap <silent> gr :call <SID>CocJumpAndSetTagStack('jumpReferences') <CR>
 
 function! s:CocJumpAndSetTagStack(type)
     " 记录好跳转前的位置.
@@ -1636,16 +1636,7 @@ function! s:CocJumpAndSetTagStack(type)
     let item = {'bufnr': pos[0], 'from': pos, 'tagname': tag}
 
     " 判断跳转的方式
-    let result = v:false
-    if a:type == 0
-        let result = CocAction('jumpDefinition')
-    elseif a:type == 1
-        let result = CocAction('jumpTypeDefinition')
-    elseif a:type == 2
-        let result = CocAction('jumpImplementation')
-    elseif a:type == 3
-        let result = CocAction('jumpReferences')
-    endif
+    let result = CocAction(a:type)
 
     if result == v:false
         " 找不到，则结束
