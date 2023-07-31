@@ -102,7 +102,8 @@ bear 是一个为 clang 生成编译数据库的工具。
 - 命令行安装：`sudo apt-get install bear`
 - 源码安装: 源码地址为 <https://github.com/rizsotto/Bear>
 
-使用方式：在 make 命令前加 bear，如`bear make -j4`，即可生成 `compile_commands.json`。
+使用方式：在 make 命令前加 bear，如`bear -- make -j4`，即可生成 `compile_commands.json`。
+如果想传递参数给 bear 命令，需要在 `--` 前传递。
 
 生成的 `compile_commands.json` 是 coc-clangd 补全和跳转的依据。
 `compile_commands.json` 的生成方式可以参考：<https://clangd.llvm.org/installation.html#project-setup>

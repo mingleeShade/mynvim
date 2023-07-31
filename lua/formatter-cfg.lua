@@ -49,6 +49,9 @@ require("formatter").setup({
         javascript = {
             require("formatter.filetypes.javascript").prettier,
         },
+        python = {
+            require("formatter.filetypes.python").black,
+        },
         cpp = {
             -- require("formatter.filetypes.cpp").clangformat,
             function()

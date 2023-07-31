@@ -139,6 +139,18 @@ return require("packer").startup(function(use)
         end,
     })
 
+    use({
+        "sindrets/diffview.nvim",
+        requires = "nvim-lua/plenary.nvim",
+        coifig = function()
+            require("diffview").setup({
+                merge_tool = {
+                    layout = "diff4_mixed",
+                },
+            })
+        end,
+    })
+
     -- nvim-osc52
     -- use ({
     --     'ojroques/nvim-osc52',

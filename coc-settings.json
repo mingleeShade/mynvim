@@ -80,6 +80,5 @@
     "Lua.telemetry.enable": true,
     "tsserver.log": "verbose",
     "sh.enable": true,
-    "git.enableGutters": true,
-    "python.venvPath": "/home/haiming/.local/lib/python3.9"
+    "git.enableGutters": true
 }
