@@ -93,7 +93,6 @@ return require("packer").startup(function(use)
 
     use({
         "romgrk/barbar.nvim",
-        requires = "kyazdani42/nvim-web-devicons",
         config = function()
             require("barbar-cfg")
         end,
@@ -120,6 +119,9 @@ return require("packer").startup(function(use)
             })
         end,
     })
+
+    use("Bekaboo/dropbar.nvim")
+    use("nvim-tree/nvim-web-devicons")
 
     -- nvim-osc52
     -- use ({
