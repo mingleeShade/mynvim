@@ -562,6 +562,8 @@ autocmd FileType floaterm tnoremap <silent> <buffer> <ESC> <C-\><C-n>:FloatermHi
 " autocmd WinEnter * if win_gettype(win_getid()) is 'popup' | nnoremap <silent><buffer> <ESC> :call EscExitEveryTerminal()<CR> | endif
 " autocmd FileType chatgpt  nnoremap <silent><buffer> <ESC> :call EscExitEveryTerminal()<CR>
 " autocmd FileType chatgpt  inoremap <silent><buffer> <ESC> <C-\><C-o>:call EscExitEveryTerminal()<CR>
+"
+" tnoremap    <ESC> <C-\><C-n>:echo "Normal" <CR>
 
 function! PrintCurWininfo()
     let bufnr = winbufnr(win_getid())
