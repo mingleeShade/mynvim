@@ -2,7 +2,7 @@
 " 检查plug.vim是否安装下载
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     echo "plug.vim not exist, now download it!"
-    :silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    silent execute '!curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -40,7 +40,7 @@ set cino+=g0
 " 语法高亮
 syntax on
 autocmd BufEnter * :syn sync maxlines=500
-set synmaxcol=200
+set synmaxcol=256
 set nocursorline
 "----------颜色主题----------
 
@@ -124,10 +124,10 @@ command! -complete=dir -nargs=* Blade call Blade('<args>')
 nnoremap <leader>so :source $MYVIMRC <CR>
 
 function! CopyConfig()
-    silent !cp ~/my_config/mynvim/init.vim ~/.config/nvim/
-    silent !cp ~/my_config/mynvim/coc-settings.json ~/.config/nvim/
-    silent !cp ~/my_config/mynvim/local.vim ~/.config/nvim/
-    silent !cp ~/my_config/mynvim/lua/*.lua ~/.config/nvim/lua/
+    silent execute '!cp ~/my_config/mynvim/init.vim ~/.config/nvim/'
+    silent execute '!cp ~/my_config/mynvim/coc-settings.json ~/.config/nvim/'
+    silent execute '!cp ~/my_config/mynvim/local.vim ~/.config/nvim/'
+    silent execute '!cp ~/my_config/mynvim/lua/*.lua ~/.config/nvim/lua/'
     :PackerCompile
 endfunction
 
@@ -1278,7 +1278,7 @@ let g:lightline = {
 function! UpdateCscope()
     :silent cs kill 0
     ":silent !find . -path ./robot/share/gpb -prune -o -name "*.h" -o -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.hpp" > cscope.files
-    :silent !find . -name "*.h" -o -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.hpp" > cscope.files
+    silent execute '!find . -name "*.h" -o -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.hpp" > cscope.files'
     :!cscope -bkq -i cscope.files
     :cs add cscope.out
     :e
