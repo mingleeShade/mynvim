@@ -40,7 +40,7 @@ set cino+=g0
 " 语法高亮
 syntax on
 autocmd BufEnter * :syn sync maxlines=500
-set synmaxcol=256
+set synmaxcol=1024
 set nocursorline
 "----------颜色主题----------
 
@@ -447,7 +447,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " 模糊查找 ctrlp, 观察一段时间，如果可以被 LeaderF完全取代，则删去
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
 
 " 模糊查找 LeaderF
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
@@ -455,6 +455,7 @@ Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 " 查找关键字和批量替换
 Plug 'brooth/far.vim'
 Plug 'wincent/ferret'
+" Plug 'nvim-pack/nvim-spectre' "放到 packer 中
 
 " 全局查找定义和引用, fork 自 pechorin/any-jump.vim
 Plug 'mingleeShade/any-jump.vim'
@@ -1058,9 +1059,10 @@ let g:rnvimr_pick_enable = 1
 highlight link RnvimrNormal CursorLine
 nnoremap <silent><leader>r :RnvimrToggle<CR>
 " tnoremap <silent><> <C-\><C-n>:RnvimrResize 0<CR>
+let g:rnvimr_border_attr = {'fg': 14, 'bg':-1}
 let g:rnvimr_action = {
             \ '<C-t>': 'NvimEdit tabedit',
-            \ '<C-x>': 'NvimEdit split',
+            \ '<C-h>': 'NvimEdit split',
             \ '<C-v>': 'NvimEdit vsplit',
             \ 'gw': 'JumpNvimCwd',
             \ 'yw': 'EmitRangerCwd'
@@ -1077,7 +1079,7 @@ let g:rnvimr_presets = [{'width': 0.9, 'height': 0.9}]
 " ===
 " === ctrlp
 " ===
-let g:ctrlp_map='<leader>p'
+" let g:ctrlp_map='<leader>p'
 
 
 
@@ -1760,8 +1762,8 @@ vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(
 " 选中下一个范围的内容，从 单词、行、段落到整个函数体
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
+" nmap <silent> <C-s> <Plug>(coc-range-select)
+" xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Mappings for CoCList
 " Show all diagnostics.
