@@ -37,6 +37,19 @@
 
 --require('nvim-osc52-cfg')
 
+vim.keymap.set("n", "<leader>p", '<cmd>lua require("spectre").open()<CR>', {
+    desc = "Open Spectre",
+})
+vim.keymap.set("n", "<leader>pw", '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+    desc = "Search current word",
+})
+vim.keymap.set("v", "<leader>pw", '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+    desc = "Search current word",
+})
+vim.keymap.set("n", "<leader>pp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+    desc = "Search on current file",
+})
+
 return require("packer").startup(function(use)
     -- Packer can manage itself
     use("wbthomason/packer.nvim")
@@ -76,7 +89,7 @@ return require("packer").startup(function(use)
         "folke/which-key.nvim",
         config = function()
             vim.o.timeout = true
-            vim.o.timeoutlen = 300
+            vim.o.timeoutlen = 500
             require("which-key").setup({
                 -- your configuration comes here
                 -- or leave it empty to use the default settings
@@ -87,13 +100,21 @@ return require("packer").startup(function(use)
                     i = { "j", "k", "\\" },
                     v = { "j", "k" },
                 },
+                disable = {
+                    buftypes = {
+                        "quickfix",
+                        "nowrite",
+                        "help",
+                        "terminal",
+                        "prompt",
+                    },
+                },
             })
         end,
     })
 
     use({
         "romgrk/barbar.nvim",
-        requires = "kyazdani42/nvim-web-devicons",
         config = function()
             require("barbar-cfg")
         end,
@@ -110,6 +131,14 @@ return require("packer").startup(function(use)
     })
 
     use({
+        "nvim-pack/nvim-spectre",
+        requires = "nvim-lua/plenary.nvim",
+        config = function()
+            require("spectre").setup({})
+        end,
+    })
+
+    use({
         "sindrets/diffview.nvim",
         requires = "nvim-lua/plenary.nvim",
         coifig = function()
@@ -120,6 +149,9 @@ return require("packer").startup(function(use)
             })
         end,
     })
+
+    use("Bekaboo/dropbar.nvim")
+    use("nvim-tree/nvim-web-devicons")
 
     -- nvim-osc52
     -- use ({

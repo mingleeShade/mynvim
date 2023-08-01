@@ -2,7 +2,7 @@
 " 检查plug.vim是否安装下载
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     echo "plug.vim not exist, now download it!"
-    :silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    silent execute '!curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -40,7 +40,7 @@ set cino+=g0
 " 语法高亮
 syntax on
 autocmd BufEnter * :syn sync maxlines=500
-set synmaxcol=200
+set synmaxcol=1024
 set nocursorline
 "----------颜色主题----------
 
@@ -124,10 +124,10 @@ command! -complete=dir -nargs=* Blade call Blade('<args>')
 nnoremap <leader>so :source $MYVIMRC <CR>
 
 function! CopyConfig()
-    silent !cp ~/my_config/mynvim/init.vim ~/.config/nvim/
-    silent !cp ~/my_config/mynvim/coc-settings.json ~/.config/nvim/
-    silent !cp ~/my_config/mynvim/local.vim ~/.config/nvim/
-    silent !cp ~/my_config/mynvim/lua/*.lua ~/.config/nvim/lua/
+    silent execute '!cp ~/my_config/mynvim/init.vim ~/.config/nvim/'
+    silent execute '!cp ~/my_config/mynvim/coc-settings.json ~/.config/nvim/'
+    silent execute '!cp ~/my_config/mynvim/local.vim ~/.config/nvim/'
+    silent execute '!cp ~/my_config/mynvim/lua/*.lua ~/.config/nvim/lua/'
     :PackerCompile
 endfunction
 
@@ -447,7 +447,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " 模糊查找 ctrlp, 观察一段时间，如果可以被 LeaderF完全取代，则删去
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
 
 " 模糊查找 LeaderF
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
@@ -455,6 +455,7 @@ Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 " 查找关键字和批量替换
 Plug 'brooth/far.vim'
 Plug 'wincent/ferret'
+" Plug 'nvim-pack/nvim-spectre' "放到 packer 中
 
 " 全局查找定义和引用, fork 自 pechorin/any-jump.vim
 Plug 'mingleeShade/any-jump.vim'
@@ -1060,9 +1061,10 @@ let g:rnvimr_pick_enable = 1
 highlight link RnvimrNormal CursorLine
 nnoremap <silent><leader>r :RnvimrToggle<CR>
 " tnoremap <silent><> <C-\><C-n>:RnvimrResize 0<CR>
+let g:rnvimr_border_attr = {'fg': 14, 'bg':-1}
 let g:rnvimr_action = {
             \ '<C-t>': 'NvimEdit tabedit',
-            \ '<C-x>': 'NvimEdit split',
+            \ '<C-h>': 'NvimEdit split',
             \ '<C-v>': 'NvimEdit vsplit',
             \ 'gw': 'JumpNvimCwd',
             \ 'yw': 'EmitRangerCwd'
@@ -1079,7 +1081,7 @@ let g:rnvimr_presets = [{'width': 0.9, 'height': 0.9}]
 " ===
 " === ctrlp
 " ===
-let g:ctrlp_map='<leader>p'
+" let g:ctrlp_map='<leader>p'
 
 
 
@@ -1280,7 +1282,7 @@ let g:lightline = {
 function! UpdateCscope()
     :silent cs kill 0
     ":silent !find . -path ./robot/share/gpb -prune -o -name "*.h" -o -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.hpp" > cscope.files
-    :silent !find . -name "*.h" -o -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.hpp" > cscope.files
+    silent execute '!find . -name "*.h" -o -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.hpp" > cscope.files'
     :!cscope -bkq -i cscope.files
     :cs add cscope.out
     :e
@@ -1626,10 +1628,10 @@ endif
 " nmap <silent> gr <Plug>(coc-references)
 
 " 函数跳转快捷键 自行封装接口
-nmap <silent> gd :call <SID>CocJumpAndSetTagStack(0) <CR>
-nmap <silent> gy :call <SID>CocJumpAndSetTagStack(1) <CR>
-nmap <silent> gi :call <SID>CocJumpAndSetTagStack(2) <CR>
-nmap <silent> gr :call <SID>CocJumpAndSetTagStack(3) <CR>
+nmap <silent> gd :call <SID>CocJumpAndSetTagStack('jumpDefinition') <CR>
+nmap <silent> gy :call <SID>CocJumpAndSetTagStack('jumpTypeDefinition') <CR>
+nmap <silent> gi :call <SID>CocJumpAndSetTagStack('jumpImplementation') <CR>
+nmap <silent> gr :call <SID>CocJumpAndSetTagStack('jumpReferences') <CR>
 
 function! s:CocJumpAndSetTagStack(type)
     " 记录好跳转前的位置.
@@ -1638,16 +1640,7 @@ function! s:CocJumpAndSetTagStack(type)
     let item = {'bufnr': pos[0], 'from': pos, 'tagname': tag}
 
     " 判断跳转的方式
-    let result = v:false
-    if a:type == 0
-        let result = CocAction('jumpDefinition')
-    elseif a:type == 1
-        let result = CocAction('jumpTypeDefinition')
-    elseif a:type == 2
-        let result = CocAction('jumpImplementation')
-    elseif a:type == 3
-        let result = CocAction('jumpReferences')
-    endif
+    let result = CocAction(a:type)
 
     if result == v:false
         " 找不到，则结束
@@ -1771,8 +1764,8 @@ vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(
 " 选中下一个范围的内容，从 单词、行、段落到整个函数体
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
+" nmap <silent> <C-s> <Plug>(coc-range-select)
+" xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Mappings for CoCList
 " Show all diagnostics.
