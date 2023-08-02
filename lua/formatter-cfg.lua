@@ -9,37 +9,38 @@ require("formatter").setup({
     log_level = vim.log.levels.WARN,
     -- All formatter configurations are opt-in
     filetype = {
+        -- lua 的格式化，可以由 coc-sumneko-lua 支持
         -- Formatter configurations for filetype "lua" go here
         -- and will be executed in order
-        lua = {
-            -- "formatter.filetypes.lua" defines default configurations for the
-            -- "lua" filetype
-            -- require("formatter.filetypes.lua").stylua,
+        -- lua = {
+        --     -- "formatter.filetypes.lua" defines default configurations for the
+        --     -- "lua" filetype
+        --     -- require("formatter.filetypes.lua").stylua,
 
-            -- You can also define your own configuration
-            function()
-                -- Supports conditional formatting
-                if util.get_current_buffer_file_name() == "special.lua" then
-                    return nil
-                end
+        --     -- You can also define your own configuration
+        --     function()
+        --         -- Supports conditional formatting
+        --         if util.get_current_buffer_file_name() == "special.lua" then
+        --             return nil
+        --         end
 
-                -- Full specification of configurations is down below and in Vim help
-                -- files
-                return {
-                    exe = "stylua",
-                    args = {
-                        "--search-parent-directories",
-                        "--indent-type Spaces",
-                        "--indent-width 4",
-                        "--stdin-filepath",
-                        util.escape_path(util.get_current_buffer_file_path()),
-                        "--",
-                        "-",
-                    },
-                    stdin = true,
-                }
-            end,
-        },
+        --         -- Full specification of configurations is down below and in Vim help
+        --         -- files
+        --         return {
+        --             exe = "stylua",
+        --             args = {
+        --                 "--search-parent-directories",
+        --                 "--indent-type Spaces",
+        --                 "--indent-width 4",
+        --                 "--stdin-filepath",
+        --                 util.escape_path(util.get_current_buffer_file_path()),
+        --                 "--",
+        --                 "-",
+        --             },
+        --             stdin = true,
+        --         }
+        --     end,
+        -- },
         html = {
             require("formatter.filetypes.html").prettier,
         },

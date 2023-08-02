@@ -1717,6 +1717,8 @@ nmap <c-\>rn <Plug>(coc-rename)
 "xmap <leader>f  <Plug>(coc-format-selected)
 "nmap <leader>f  <Plug>(coc-format-selected)
 "
+
+autocmd BufWritePre *.lua call CocAction('format')
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).

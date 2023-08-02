@@ -77,7 +77,11 @@
         "--number-select"
     ],
     "Lua.workspace.checkThirdParty": false,
-    "Lua.telemetry.enable": true,
+    "Lua.format.enable": true,
+    "Lua.format.defaultConfig": {
+        "indent_style": "space",
+        "indent_size": "4"
+    },
     "tsserver.log": "verbose",
     "sh.enable": true,
     "git.enableGutters": true
