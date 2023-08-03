@@ -6,6 +6,18 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
+" 临时修复 https://github.com/neoclide/coc.nvim/issues/4719 问题
+if has('nvim')
+    set winbar=%{%get(b:,'coc_symbol_line','')%}
+    " FIXME:
+    func MyHandler(timer) abort
+        set cmdheight=1
+    endfunc
+    let timer = timer_start(500, 'MyHandler', {'repeat': -1})
+endif
+
+
 " 这三行用来调试 启动时的 耗时
 " :profile start cost_time.log
 " :profile func *

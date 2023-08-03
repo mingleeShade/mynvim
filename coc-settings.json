@@ -49,7 +49,7 @@
         //     }
         // }
     },
-    "Lua.runtime.version": "Lua 5.2",
+    //"Lua.runtime.version": "Lua 5.2",
     "Lua.diagnostics.globals": [
         "Game",
         "g_BingoMgr",
