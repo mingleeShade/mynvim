@@ -1,0 +1,8 @@
+{
+    "lua": [
+        "example.lua"
+    ],
+    "cpp": [
+        "example.cpp"
+    ]
+}

@@ -10,7 +10,7 @@ else
 fi
 
 cp -v ./*.vim ${INSALL_DIR}
-cp -v ./coc-settings.json ${INSALL_DIR}
+cp -v ./*.json ${INSALL_DIR}
 cp -v ./cpp_farignore ${INSALL_DIR}
 cp -v ./.astylerc ${INSALL_DIR}
 mkdir -pv ${INSALL_DIR}/lua

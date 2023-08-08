@@ -137,7 +137,7 @@ nnoremap <leader>so :source $MYVIMRC <CR>
 
 function! CopyConfig()
     silent execute '!cp ~/my_config/mynvim/init.vim ~/.config/nvim/'
-    silent execute '!cp ~/my_config/mynvim/coc-settings.json ~/.config/nvim/'
+    silent execute '!cp ~/my_config/mynvim/*.json ~/.config/nvim/'
     silent execute '!cp ~/my_config/mynvim/local.vim ~/.config/nvim/'
     silent execute '!cp ~/my_config/mynvim/lua/*.lua ~/.config/nvim/lua/'
     :PackerCompile
@@ -539,9 +539,9 @@ let g:asyncrun_open=6
 " ===
 " === rubberduck-gpt3.vim chatGPT 小黄鸭
 " ===
-"按键映射 RunPythonScript
-nnoremap    <silent>    <leader>dc  :call RunPythonScript()<CR>
-vnoremap    <silent>    <leader>dc  :call RunPythonScript()<CR>
+" "按键映射 RunPythonScript
+" nnoremap    <silent>    <leader>dc  :call RunPythonScript()<CR>
+" vnoremap    <silent>    <leader>dc  :call RunPythonScript()<CR>
 
 
 " ===
@@ -1543,10 +1543,10 @@ let g:indentLine_conceallevel = 1
 " ===
 " === formatter.nvim
 " ===
-augroup FormatAutogroup
-    autocmd!
-    autocmd BufWritePost * FormatWrite
-augroup END
+" augroup FormatAutogroup
+"     autocmd!
+"     autocmd BufWritePost * FormatWrite
+" augroup END
 
 
 
@@ -1728,17 +1728,131 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <c-\>rn <Plug>(coc-rename)
 
 " 格式化选中的代码(需要lsp语言支持)
-"xmap <leader>f  <Plug>(coc-format-selected)
-"nmap <leader>f  <Plug>(coc-format-selected)
-"
+xmap <leader>ff  <Plug>(coc-format-selected)
+nmap <leader>ff  <Plug>(coc-format-selected)
 
-autocmd BufWritePre *.lua call CocAction('format')
+
+" autocmd BufWritePre *.lua call CocAction('format')
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" 为了优化代码格式化增加的配置
+
+" let config_json = readfile('.vim/format_ignore')
+" let config = json_decode(join(config_json, '\n'))
+
+"format_ignore.json 格式如下：
+"{
+"   "lua": ["file1.lua", "file2.lua"],
+"   "cpp": ["file1.cpp", "file2.cpp"]
+"}
+"
+
+" 开始时，加载 formatter 忽略列表
+let g:ignore_file_list_map = {}
+function! s:cocFormatInit()
+    let l:check_path_list = ['.vim/format_ignore.json', $HOME . '/.config/nvim/format_ignore.json']
+    for l:file in l:check_path_list
+        if !filereadable(expand(l:file))
+            continue
+        endif
+        let l:config_json = readfile(l:file)
+        let l:config = json_decode(l:config_json)
+        " 遍历各种类型的
+        for l:type in keys(l:config)
+            " 判断是否在 list 中
+            if !has_key(g:ignore_file_list_map, l:type)
+                let g:ignore_file_list_map[l:type] = l:config[l:type]
+                continue
+            endif
+            for l:ignore in l:config[l:type]
+                if index(g:ignore_file_list_map[l:type], l:ignore) < 0
+                    call add(g:ignore_file_list_map[l:type], l:ignore)
+                endif
+            endfor "l:config[l:type]
+        endfor "l:config
+    endfor "l:check_path_list
+endfunction
+call s:cocFormatInit()
+
+function! s:cocFormatter() abort
+    let l:current_filetype = &filetype
+    if !has_key(g:ignore_file_list_map, l:current_filetype)
+        call CocAction('format')
+        return
+    endif
+    let l:ignore_list = g:ignore_file_list_map[l:current_filetype]
+    let l:cur_file = expand('%:p')
+    for l:ignore_file in l:ignore_list
+        if match(l:cur_file, expand(l:ignore_file)) >= 0
+            " echomsg l:ignore_file . ' match ' . l:cur_file . ', ignore... '
+            " echomsg ''
+            return
+        endif
+    endfor
+    call CocAction('format')
+endfunction
+
+" 这段 chatgpt 生成的代码没用，没有json模块
+" lua <<EOF
+" local json = require('json')
+" function FormatJson(data)
+"     local formated_json = json.encode_pretty(data)
+"     return formated_json
+" end
+" function WriteJsonToFile(data, filename)
+"     local formatted_json = FormatJson(data)
+"     local file = io.open(filename, 'w')
+"     if file then
+"         file:write(formatted_json)
+"         file:close()
+"         print("JSON 数据已成功写入文件。")
+"     else
+"         print("无法打开文件。")
+"         end
+" end
+" EOF
+
+function! s:cocAddFormatIgnore(file_name)
+    let l:path = '.vim/format_ignore.json'
+    let l:local_config = {}
+    if filereadable(expand(l:path))
+        let l:config_json = readfile(l:path)
+        let l:local_config = json_decode(l:config_json)
+    endif
+    let l:ft = &filetype
+    if !has_key(l:local_config, l:ft)
+        let l:local_config[l:ft] = [a:file_name]
+    else
+        let l:ignore_list = l:local_config[l:ft]
+        if index(l:ignore_list, a:file_name) >= 0
+            echon 'Already exists in ignore list, skip... '
+            return
+        endif
+        call add(l:ignore_list, a:file_name)
+    endif
+    let l:write_data = json_encode(l:local_config)
+    let l:tmp_file_name = '.tmp.json'
+    call writefile([l:write_data], l:tmp_file_name)
+    silent execute '!python -m json.tool ' .. l:tmp_file_name .. ' > ' l:path
+    silent execute '!rm -f ' .. l:tmp_file_name
+    echon 'Add ' .. a:file_name .. ' to format ignore list. '
+
+    " 重新加载 ignore 列表
+    let g:ignore_file_list_map = {}
+    call s:cocFormatInit()
+endfunction
+nnoremap <silent> <leader>fa :call <SID>cocAddFormatIgnore(expand('%:t')) <CR>
+
+" 调用格式化函数
+augroup myFormatter
+    autocmd!
+    autocmd BufWritePre *.lua call s:cocFormatter()
 augroup end
 
 " 暂时不知道用途，后面看看
