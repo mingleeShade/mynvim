@@ -50,6 +50,18 @@ vim.keymap.set("n", "<leader>pp", '<cmd>lua require("spectre").open_file_search(
     desc = "Search on current file",
 })
 
+function Test()
+    ignore_list_map = vim.g.ignore_file_list_map
+    print("sss")
+    for key, value in pairs(ignore_list_map) do
+        print('key:' .. key)
+    end
+end
+
+vim.keymap.set("n", "<leader>dd", '<cmd>lua Test()<CR>', {
+    desc = "Test func"
+})
+
 return require("packer").startup(function(use)
     -- Packer can manage itself
     use("wbthomason/packer.nvim")

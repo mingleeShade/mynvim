@@ -1824,6 +1824,8 @@ function! s:cocAddFormatIgnore(file_name)
     if filereadable(expand(l:path))
         let l:config_json = readfile(l:path)
         let l:local_config = json_decode(l:config_json)
+    else
+        silent execute '!mkdir -p .vim'
     endif
     let l:ft = &filetype
     if !has_key(l:local_config, l:ft)
@@ -1847,7 +1849,14 @@ function! s:cocAddFormatIgnore(file_name)
     let g:ignore_file_list_map = {}
     call s:cocFormatInit()
 endfunction
-nnoremap <silent> <leader>fa :call <SID>cocAddFormatIgnore(expand('%:t')) <CR>
+
+function! s:cocAddCurrentFileToFormatIgnore()
+    let l:current_file = expand('%:p')
+    let l:current_working_directory = getcwd()
+    let l:relative_path = substitute(l:current_file, l:current_working_directory . '/', '', '')
+    call s:cocAddFormatIgnore(l:relative_path)
+endfunction
+nnoremap <silent> <leader>fa :call <SID>cocAddCurrentFileToFormatIgnore() <CR>
 
 " 调用格式化函数
 augroup myFormatter
