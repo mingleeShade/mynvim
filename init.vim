@@ -1728,8 +1728,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <c-\>rn <Plug>(coc-rename)
 
 " 格式化选中的代码(需要lsp语言支持)
-xmap <leader>ff  <Plug>(coc-format-selected)
-nmap <leader>ff  <Plug>(coc-format-selected)
+xmap <leader>fo  <Plug>(coc-format-selected)
+nmap <leader>fo  <Plug>(coc-format-selected)
 
 
 " autocmd BufWritePre *.lua call CocAction('format')
